@@ -17,7 +17,6 @@ class file_utils(unittest.TestCase):
     def test_normal(self):
         from normal import norm_list
         normed_list = norm_list([1, 100, 101])
-        print (normed_list)
         filter_great_than = list(filter(lambda x: abs(x) >= 1.0, normed_list))
         self.assertEqual(0, len(filter_great_than))
 
