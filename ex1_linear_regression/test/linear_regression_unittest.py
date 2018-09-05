@@ -20,6 +20,16 @@ class file_utils(unittest.TestCase):
         filter_great_than = list(filter(lambda x: abs(x) >= 1.0, normed_list))
         self.assertEqual(0, len(filter_great_than))
 
+    def test_normal_martix(self):
+        from file_utils import read_csv
+        from normal import norm_matrix
+        import numpy
+        m = read_csv("../resource/ex1data2.txt")
+        m2 = numpy.asarray(m)
+        normed_matrix = norm_matrix(m2)
+
+        self.assertIsNotNone(normed_matrix)
+
 
 if __name__ == '__main__':
     unittest.main()
