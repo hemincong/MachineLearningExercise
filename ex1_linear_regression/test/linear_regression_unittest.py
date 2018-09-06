@@ -9,8 +9,8 @@ class file_utils(unittest.TestCase):
     def test_upper(self):
         from file_utils import read_csv
         import numpy
-        m = read_csv("../resource/ex1data2.txt")
-        m2 = numpy.asmatrix(m)
+        m = read_csv("test/resource/ex1data2.txt")
+        m2 = numpy.asarray(m)
         self.assertGreater(len(m), 0)
         self.assertIsNotNone(m2)
 
@@ -24,7 +24,7 @@ class file_utils(unittest.TestCase):
         from file_utils import read_csv
         from normal import norm_matrix
         import numpy
-        m = read_csv("../resource/ex1data2.txt")
+        m = read_csv("test/resource/ex1data2.txt")
         m2 = numpy.asarray(m)
         normed_matrix = norm_matrix(m2)
 
