@@ -20,15 +20,37 @@ class file_utils(unittest.TestCase):
         filter_great_than = list(filter(lambda x: abs(x) >= 1.0, normed_list))
         self.assertEqual(0, len(filter_great_than))
 
-    def test_normal_martix(self):
+    def test_normal_matrix(self):
         from file_utils import read_csv
         from normal import norm_matrix
         import numpy
         m = read_csv("test/resource/ex1data2.txt")
         m2 = numpy.asarray(m)
         normed_matrix = norm_matrix(m2)
-
         self.assertIsNotNone(normed_matrix)
+
+    def test_gcd_multi_vars_1(self):
+        from file_utils import read_csv
+        import numpy
+        m = read_csv("test/resource/ex1data1.txt")
+        m2 = numpy.asarray(m)
+        self.assertIsNotNone(m2)
+        from multi_vars import gcd_m
+        alpha = 0.01
+        ret = gcd_m(m2, alpha)
+        self.assertAlmostEqual(ret[0], -3.84, delta=alpha)
+        self.assertAlmostEqual(ret[1], 1.18, delta=alpha)
+
+    def test_gcd_multi_vars_2(self):
+        from file_utils import read_csv
+        from normal import norm_matrix
+        import numpy
+        m = read_csv("test/resource/ex1data2.txt")
+        m2 = numpy.asarray(m)
+        normed_matrix = norm_matrix(m2)
+        self.assertIsNotNone(normed_matrix)
+        from multi_vars import gcd_m
+        gcd_m(normed_matrix, 0.001)
 
 
 if __name__ == '__main__':
