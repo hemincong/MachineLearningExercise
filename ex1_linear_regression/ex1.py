@@ -7,7 +7,7 @@ x = []
 y = []
 alpha = 0.01
 
-with open("ex1data1.txt", "r") as infile:
+with open("test/resource/ex1data1.txt", "r") as infile:
     for line in infile:
         pos = line.strip().split(',')
         x.append(float(pos[0]))
