@@ -20,7 +20,7 @@ python3 -m pip install numpy
 
 ```Bash
 cd ex1_linear_regression
-python -m unitest test.linear_regression_unittest.line_regression
+python -m unitest test.linear_regression_unittest.test_line_regression
 ```
 
 # 目录
