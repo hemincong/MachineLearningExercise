@@ -10,6 +10,7 @@ def any_above_alpha(l, alpha):
 def compute_theta(params, theta_list, y):
     ret = []
     import numpy as np
+    # 补1
     s = [1] + list(params)
     t = np.asarray(s) * np.asarray(theta_list).T
     h = sum(t) - y
@@ -29,9 +30,9 @@ def compute_cost(params, theta_list, y):
 def gcd_m(m, alpha):
     import numpy as np
     col, row = np.shape(m)
-    theta_list = [100] * row
-
     # print("col:{col}, row:{row}".format(col=col, row=row))
+
+    theta_list = [100] * row
 
     ret = [100.0] * len(theta_list)
     while any_above_alpha(ret, alpha):
@@ -39,7 +40,6 @@ def gcd_m(m, alpha):
         # 每每项数据
         for i in range(0, col):
             y = m.item(i, -1)
-            # 补1
             s = m[i, 0:row - 1]
             ret_temp = compute_theta(s, theta_list, y)
             # cost = compute_cost(s, theta_list, y)
@@ -50,9 +50,8 @@ def gcd_m(m, alpha):
             ret[i] = ret[i] / col
         # print(ret)
 
-        # print(ret)
         # 必须分开两个循环,更新和计算不能交叉做
         for i in range(0, row):
             theta_list[i] = theta_list[i] - alpha * ret[i]
-        print(theta_list)
+        # print(theta_list)
     return theta_list
