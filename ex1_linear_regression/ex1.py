@@ -116,6 +116,3 @@ def drew_J_theta():
 
     plt.show()
 
-
-drew_J_theta()
-drew_1()

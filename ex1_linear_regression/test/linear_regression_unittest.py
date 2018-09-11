@@ -4,6 +4,16 @@
 import unittest
 
 
+def ex1_drew1_test():
+    from ex1 import drew_1
+    drew_1()
+
+
+def ex1_drew_j_theta_test():
+    from ex1 import drew_J_theta
+    drew_J_theta()
+
+
 class file_utils(unittest.TestCase):
 
     def test_upper(self):
