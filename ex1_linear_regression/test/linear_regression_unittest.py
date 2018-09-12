@@ -64,7 +64,32 @@ class test_line_regression(unittest.TestCase):
         normed_matrix = norm_matrix(m2)
         self.assertIsNotNone(normed_matrix)
         from multi_vars import gcd_m
-        gcd_m(normed_matrix, 0.001)
+        alpha = 0.001
+        ret = gcd_m(normed_matrix, 0.001)
+        self.assertAlmostEqual(ret[0], -3.84, delta=alpha)
+        self.assertAlmostEqual(ret[1], 1.18, delta=alpha)
+
+    def test_normal_eq_1(self):
+        from file_utils import read_csv
+        from normalEqn import normal_eq_n
+        import numpy
+        m = read_csv("test/resource/ex1data1.txt")
+        m2 = numpy.asarray(m)
+        ret = normal_eq_n(m2)
+        alpha = 0.1
+        self.assertAlmostEqual(ret[0], -3.84, delta=alpha)
+        self.assertAlmostEqual(ret[1], 1.18, delta=alpha)
+
+    def test_normal_eq_2(self):
+        from file_utils import read_csv
+        from normalEqn import normal_eq_n
+        import numpy
+        m = read_csv("test/resource/ex1data2.txt")
+        m2 = numpy.asarray(m)
+        ret = normal_eq_n(m2)
+        self.assertAlmostEqual(ret[0], 89597, delta=1)
+        self.assertAlmostEqual(ret[1], 139, delta=1)
+        self.assertAlmostEqual(ret[2], -8738, delta=1)
 
 
 if __name__ == '__main__':
