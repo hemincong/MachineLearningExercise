@@ -9,4 +9,4 @@ def normal_eq_n(m):
     y = m[0:row, col-1:col]
     X = np.c_[np.ones(row), s]
     from numpy.linalg import inv
-    return list(inv(X.T.dot(X)).dot(X.T).dot(y))
+    return list((inv(X.T.dot(X)).dot(X.T).dot(y)).flat)
