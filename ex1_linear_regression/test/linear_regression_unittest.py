@@ -66,8 +66,9 @@ class test_line_regression(unittest.TestCase):
         from multi_vars import gcd_m
         alpha = 0.001
         ret = gcd_m(normed_matrix, 0.001)
-        self.assertAlmostEqual(ret[0], -3.84, delta=alpha)
-        self.assertAlmostEqual(ret[1], 1.18, delta=alpha)
+        self.assertAlmostEqual(ret[0], 89597, delta=1)
+        self.assertAlmostEqual(ret[1], 139, delta=1)
+        self.assertAlmostEqual(ret[2], -8738, delta=1)
 
     def test_normal_eq_1(self):
         from file_utils import read_csv
