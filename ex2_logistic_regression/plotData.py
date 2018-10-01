@@ -3,9 +3,11 @@
 
 if __name__ == "__main__":
     from utils.file_utils import read_csv
+
     data = read_csv("ex2_logistic_regression/test/resource/ex2data1.txt")
 
     import numpy as np
+
     m = np.asarray(data)
     row, col = m.shape
     x = m[0:row, 0]
@@ -25,6 +27,7 @@ if __name__ == "__main__":
             y1.append(y[i])
 
     import matplotlib.pyplot as plt
+
     plt.figure(1)
     plt.title('Scatter plot of training data')
     plt.xlabel('Exam 1 score')
