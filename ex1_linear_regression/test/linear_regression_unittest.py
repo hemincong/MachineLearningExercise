@@ -64,7 +64,6 @@ class test_line_regression(unittest.TestCase):
         normed_matrix = norm_matrix(m2)
         self.assertIsNotNone(normed_matrix)
         from multi_vars import gcd_m
-        alpha = 0.001
         ret = gcd_m(normed_matrix, 0.001)
         self.assertAlmostEqual(ret[0], 89597, delta=1)
         self.assertAlmostEqual(ret[1], 139, delta=1)
