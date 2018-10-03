@@ -14,3 +14,21 @@ def costFunction(theta, x, y):
         y_row = y[r]
         sum_l += (-y_row) * np.log(cost_row) - (1 - y_row) * np.log(1 - cost_row)
     return sum_l / x_row
+
+
+def compute_grad(theta, x, y):
+    import numpy as np
+    x_row, x_col = np.shape(x)
+    one_col = np.ones((x_row, 1))
+    whole_x = np.c_[one_col, x]
+    from ex2_logistic_regression.sigmoid import sigmoid
+    grad = [0] * (x_col + 1)
+    for r in range(x_row):
+        cost_row = sigmoid(theta.dot(whole_x[r]))
+        y_row = y[r]
+        for c in range(x_col + 1):
+            grad[c] += ((cost_row - y_row) * whole_x[r][c])[0]
+
+    for c in range(x_col + 1):
+        grad[c] = grad[c] / x_row
+    return grad
