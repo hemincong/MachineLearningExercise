@@ -32,3 +32,17 @@ def compute_grad(theta, x, y):
     for c in range(x_col + 1):
         grad[c] = grad[c] / x_row
     return grad
+
+
+def compute_grad_2(theta, x, y):
+    import numpy as np
+    x_row, x_col = np.shape(x)
+    one_col = np.ones((x_row, 1))
+    whole_x = np.c_[one_col, x]
+    wx_row, wx_col = whole_x.shape
+    theta = theta.reshape((wx_col, 1))
+    y = y.reshape((wx_row, 1))
+    from ex2_logistic_regression.sigmoid import sigmoid
+    sigmoid_x_theta = sigmoid(whole_x.dot(theta))
+    grad = (whole_x.T.dot(sigmoid_x_theta - y)) / wx_row
+    return grad.flatten()
