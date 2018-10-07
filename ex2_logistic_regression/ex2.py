@@ -15,4 +15,6 @@ def line_regression_by_fmin(x, y):
                        x0=initial_theta,
                        args=(x, y),
                        method='TNC',
-                       jac=compute_grad)
+                       jac=compute_grad,
+                       options={"maxiter": 400},
+                       )
