@@ -47,3 +47,13 @@ class test_cost(unittest.TestCase):
         from ex2_logistic_regression.ex2 import line_regression_by_fmin
         ret = line_regression_by_fmin(x, y)
         self.assertAlmostEqual(ret.fun, 0.203, delta=0.01)
+
+    def test_predict(self):
+        from utils import file_utils
+        x, y = file_utils.read_csv_split_last_col_and_add_one("test/resource/ex2data1.txt")
+        from ex2_logistic_regression.ex2 import line_regression_by_fmin
+        ret = line_regression_by_fmin(x, y)
+        self.assertAlmostEqual(ret.fun, 0.203, delta=0.01)
+        from ex2_logistic_regression.sigmoid import sigmoid
+        ret_p = sigmoid(ret.x.dot([1, 45, 85]))
+        self.assertAlmostEqual(ret_p, 0.776, delta=0.01)
