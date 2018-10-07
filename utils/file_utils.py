@@ -26,3 +26,12 @@ def read_csv_split_last_col(file_name):
     x = mm[0:row, 0:col - 1]
     y = mm[0:row, col - 1:col]
     return x, y
+
+
+def read_csv_split_last_col_and_add_one(file_name):
+    x, y = read_csv_split_last_col(file_name)
+    import numpy as np
+    x_row, x_col = np.shape(x)
+    one_col = np.ones((x_row, 1))
+    x = np.c_[one_col, x]
+    return x, y
