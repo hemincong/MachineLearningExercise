@@ -3,7 +3,9 @@
 
 
 def predict(theta, X):
-    from ex2_logistic_regression.sigmoid import sigmoid
     import numpy as np
-    ret = sigmoid(np.asarray(X).dot(theta))
-    return ret >= 0.5
+    from ex2_logistic_regression.sigmoid import sigmoid
+    sigValue = sigmoid(np.dot(X, theta))
+    p = sigValue >= 0.5
+
+    return p
