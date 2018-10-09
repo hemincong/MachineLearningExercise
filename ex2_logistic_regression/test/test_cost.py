@@ -57,3 +57,7 @@ class test_cost(unittest.TestCase):
         from ex2_logistic_regression.sigmoid import sigmoid
         ret_p = sigmoid(ret.x.dot([1, 45, 85]))
         self.assertAlmostEqual(ret_p, 0.776, delta=0.01)
+        from ex2_logistic_regression.predict import predict
+        predict_ret = predict(ret.x, [1, 45, 85])
+        self.assertTrue(predict_ret)
+
