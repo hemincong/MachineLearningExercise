@@ -9,7 +9,7 @@ class test_cost(unittest.TestCase):
 
     def test_cost(self):
         from utils import file_utils
-        x, y = file_utils.read_csv_split_last_col_and_add_one("test/resource/ex2data1.txt")
+        x, y = file_utils.read_csv_split_last_col_and_add_one("ex2_logistic_regression/test/resource/ex2data1.txt")
         from ex2_logistic_regression.costFunction import costFunction
         import numpy as np
         x_row, x_col = np.shape(x)
@@ -19,7 +19,7 @@ class test_cost(unittest.TestCase):
 
     def test_compute_theta(self):
         from utils import file_utils
-        x, y = file_utils.read_csv_split_last_col_and_add_one("test/resource/ex2data1.txt")
+        x, y = file_utils.read_csv_split_last_col_and_add_one("ex2_logistic_regression/test/resource/ex2data1.txt")
         from ex2_logistic_regression.costFunction import compute_grad
         import numpy as np
         x_row, x_col = np.shape(x)
@@ -31,7 +31,7 @@ class test_cost(unittest.TestCase):
 
     def test_compute_theta_2(self):
         from utils import file_utils
-        x, y = file_utils.read_csv_split_last_col_and_add_one("test/resource/ex2data1.txt")
+        x, y = file_utils.read_csv_split_last_col_and_add_one("ex2_logistic_regression/test/resource/ex2data1.txt")
         from ex2_logistic_regression.costFunction import compute_grad_2
         import numpy as np
         x_row, x_col = np.shape(x)
@@ -43,14 +43,14 @@ class test_cost(unittest.TestCase):
 
     def test_fmin(self):
         from utils import file_utils
-        x, y = file_utils.read_csv_split_last_col_and_add_one("test/resource/ex2data1.txt")
+        x, y = file_utils.read_csv_split_last_col_and_add_one("ex2_logistic_regression/test/resource/ex2data1.txt")
         from ex2_logistic_regression.ex2 import line_regression_by_fmin
         ret = line_regression_by_fmin(x, y)
         self.assertAlmostEqual(ret.fun, 0.203, delta=0.01)
 
     def test_predict(self):
         from utils import file_utils
-        x, y = file_utils.read_csv_split_last_col_and_add_one("test/resource/ex2data1.txt")
+        x, y = file_utils.read_csv_split_last_col_and_add_one("ex2_logistic_regression/test/resource/ex2data1.txt")
         from ex2_logistic_regression.ex2 import line_regression_by_fmin
         ret = line_regression_by_fmin(x, y)
         self.assertAlmostEqual(ret.fun, 0.203, delta=0.01)
