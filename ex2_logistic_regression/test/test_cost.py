@@ -60,6 +60,9 @@ class test_cost(unittest.TestCase):
         from ex2_logistic_regression.predict import predict
         p = predict(ret.x, x)
         import numpy as np
-        print(np.mean(p == y))
-        print('Train Accuracy: {:f}'.format(np.mean(p == y) * 100))
+        count = 0
+        for r in range(len(p)):
+            if (p[r] == y[r]):
+                count = count + 1
 
+        self.assertEqual(count, 89)
