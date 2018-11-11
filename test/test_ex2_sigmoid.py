@@ -4,7 +4,7 @@
 import unittest
 
 
-class test_sigmoid(unittest.TestCase):
+class test_ex2_sigmoid(unittest.TestCase):
 
     def test_sigmoid(self):
         from ex2_logistic_regression.sigmoid import sigmoid
