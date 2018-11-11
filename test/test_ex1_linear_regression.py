@@ -48,7 +48,7 @@ class test_line_regression(unittest.TestCase):
         from utils.file_utils import read_csv
         from ex1_linear_regression.normal import norm_matrix
         import numpy
-        m = read_csv("test/resource/ex1data2.txt")
+        m = read_csv("resource/ex1data2.txt")
         m2 = numpy.asarray(m)
         normed_matrix = norm_matrix(m2)
         self.assertIsNotNone(normed_matrix)
@@ -62,7 +62,7 @@ class test_line_regression(unittest.TestCase):
         from utils.file_utils import read_csv
         from ex1_linear_regression.normalEqn import normal_eq_n
         import numpy
-        m = read_csv("test/resource/ex1data1.txt")
+        m = read_csv("resource/ex1data1.txt")
         m2 = numpy.asarray(m)
         ret = normal_eq_n(m2)
         alpha = 0.1
@@ -73,7 +73,7 @@ class test_line_regression(unittest.TestCase):
         from utils.file_utils import read_csv
         from ex1_linear_regression.normalEqn import normal_eq_n
         import numpy
-        m = read_csv("test/resource/ex1data2.txt")
+        m = read_csv("resource/ex1data2.txt")
         m2 = numpy.asarray(m)
         ret = normal_eq_n(m2)
         self.assertAlmostEqual(ret[0], 89597, delta=1)
