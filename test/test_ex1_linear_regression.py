@@ -4,17 +4,6 @@
 import unittest
 
 
-class test_file_utils(unittest.TestCase):
-
-    def test_read_csv(self):
-        from file_utils import read_csv
-        import numpy
-        m = read_csv("test/resource/ex1data2.txt")
-        m2 = numpy.asarray(m)
-        self.assertGreater(len(m), 0)
-        self.assertIsNotNone(m2)
-
-
 class test_data_normal(unittest.TestCase):
 
     def test_normal(self):
@@ -90,7 +79,3 @@ class test_line_regression(unittest.TestCase):
         self.assertAlmostEqual(ret[0], 89597, delta=1)
         self.assertAlmostEqual(ret[1], 139, delta=1)
         self.assertAlmostEqual(ret[2], -8738, delta=1)
-
-
-if __name__ == '__main__':
-    unittest.main()
