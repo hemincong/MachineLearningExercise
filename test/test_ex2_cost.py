@@ -18,6 +18,16 @@ class test_ex2_cost(unittest.TestCase):
         ret = costFunction(theta, x, y)
         self.assertAlmostEqual(ret, 0.693, delta=0.01)
 
+    def test_cost_2(self):
+        from utils import file_utils
+        x, y = file_utils.read_csv_split_last_col_and_add_one(data_file_path)
+        from ex2_logistic_regression.costFunction import costFunction_2
+        import numpy as np
+        x_row, x_col = np.shape(x)
+        theta = np.zeros(x_col)
+        ret = costFunction_2(theta, x, y)
+        self.assertAlmostEqual(ret, 0.693, delta=0.01)
+
     def test_compute_theta(self):
         from utils import file_utils
         x, y = file_utils.read_csv_split_last_col_and_add_one(data_file_path)
