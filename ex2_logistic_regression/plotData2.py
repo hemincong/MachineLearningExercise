@@ -4,7 +4,7 @@
 if __name__ == "__main__":
     from utils.file_utils import read_csv
 
-    data = read_csv("ex2_logistic_regression/test/resource/ex2data2.txt")
+    data = read_csv("../test/resource/ex2data2.txt")
 
     import numpy as np
 
