@@ -13,12 +13,7 @@ def read_csv(file_name):
 
 
 def read_csv_split_last_col(file_name):
-    m = []
-    with open(file_name, "r") as infile:
-        for line in infile:
-            pos = line.strip().split(',')
-            tmp = list(map(float, pos))
-            m.append(tmp)
+    m = read_csv(file_name)
 
     import numpy as np
     mm = np.asarray(m)
