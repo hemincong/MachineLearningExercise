@@ -9,8 +9,7 @@ def costFunctionReg(theta, x, y, _lambda):
     sum_l = 0.0
     from ex2_logistic_regression.sigmoid import sigmoid
     for r in range(x_row):
-        reg_x = [1] + mapFeature(x[r][1], x[r][2])
-        print("reg_x: {reg}".format(reg=reg_x))
+        reg_x = [1.0] + mapFeature(x[r][1], x[r][2])
         cost_row = sigmoid(theta.dot(np.asarray(reg_x)))
         y_row = y[r]
         sum_l += (-y_row) * np.log(cost_row) - (1 - y_row) * np.log(1 - cost_row)
