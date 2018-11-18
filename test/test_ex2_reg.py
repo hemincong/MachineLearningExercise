@@ -31,10 +31,13 @@ class test_ex2_reg(unittest.TestCase):
     def test_compute_grad_reg(self):
         from utils import file_utils
         x, y = file_utils.read_csv_split_last_col_and_add_one(data_file_path)
+
         from ex2_logistic_regression.costFunctionReg import compute_grad_reg
+        from ex2_logistic_regression.mapFeature import mapFeature
         import numpy as np
-        x_row, x_col = np.shape(x)
-        theta = np.zeros(x_col)
+        mapped = mapFeature(x[:, 1], x[:, 2])
+        _, n = np.shape(mapped)
+        theta = np.zeros(n)
         _lambda = 1
-        grad = compute_grad_reg(theta, x, y, _lambda)
+        grad = compute_grad_reg(theta, mapped, y, _lambda)
         print("grad: {grad}".format(grad=grad))
