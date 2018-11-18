@@ -21,11 +21,11 @@ class test_ex2_reg(unittest.TestCase):
         from ex2_logistic_regression.mapFeature import mapFeature
         from utils import file_utils
         x, y = file_utils.read_csv_split_last_col_and_add_one(data_file_path)
+        mapped = mapFeature(x[:, 1], x[:, 2])
         import numpy as np
-        x_row, x_col = np.shape(x)
-        theta = np.zeros(29)
+        initial_theta = np.zeros(len(mapped[0]))
         _lambda = 1
-        cost = costFunctionReg(theta, x, y, _lambda)
+        cost = costFunctionReg(initial_theta, mapped, y, _lambda)
         self.assertAlmostEqual(cost, 0.693, delta=0.001)
 
     def test_compute_grad_reg(self):
@@ -38,6 +38,3 @@ class test_ex2_reg(unittest.TestCase):
         _lambda = 1
         grad = compute_grad_reg(theta, x, y, _lambda)
         print("grad: {grad}".format(grad=grad))
-        # self.assertAlmostEqual(grad[0], -0.1, delta=0.1)
-        # self.assertAlmostEqual(grad[1], -12.00, delta=0.01)
-        # self.assertAlmostEqual(grad[2], -11.262, delta=0.01)
