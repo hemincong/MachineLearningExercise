@@ -37,7 +37,34 @@ class test_ex2_reg(unittest.TestCase):
         import numpy as np
         mapped = mapFeature(x[:, 1], x[:, 2])
         _, n = np.shape(mapped)
-        theta = np.zeros(n)
+        theta = np.zeros(11)
         _lambda = 1
         grad = compute_grad_reg(theta, mapped, y, _lambda)
-        print("grad: {grad}".format(grad=grad))
+        self.assertAlmostEqual(grad[0], 0.0187, delta=0.001)
+        self.assertAlmostEqual(grad[1], 0.0504, delta=0.001)
+        self.assertTrue(len(grad), 28)
+
+    def test_feature_mapped_logistic_regression(self):
+        from ex2_logistic_regression.mapFeature import mapFeature
+        from utils import file_utils
+        import numpy as np
+        from ex2_logistic_regression.ex2 import line_regression_reg_by_fmin
+
+        x, y = file_utils.read_csv_split_last_col_and_add_one(data_file_path)
+
+        X = np.asarray(mapFeature(x[:, 1], x[:, 2]))
+        theta = np.zeros(X.shape[1])
+
+        res = line_regression_reg_by_fmin(theta, X, y, 1)
+        print(res)
+
+    def test_feature_mapped_logistic_regression_2(self):
+        from ex2_logistic_regression.mapFeature import mapFeature
+        from utils import file_utils
+        import numpy as np
+        from ex2_logistic_regression.ex2 import line_regression_reg_by_fmin_2
+        x, y = file_utils.read_csv_split_last_col_and_add_one(data_file_path)
+        X = np.asarray(mapFeature(x[:, 1], x[:, 2]))
+        theta = np.zeros(X.shape[1])
+        res = line_regression_reg_by_fmin_2(theta, X, y, 1)
+        print(res)
