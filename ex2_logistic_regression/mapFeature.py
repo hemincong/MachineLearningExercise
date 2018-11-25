@@ -8,9 +8,10 @@ def mapFeature(X1, X2):
     from math import pow
     for r in range(len(X1)):
         row = []
-        for i in range(degree + 2):
-            for j in range(i):
+        for i in range(degree + 1):
+            for j in range(i + 1):
                 xx = pow(X1[r], i - j) * pow(X2[r], j)
                 row.append(xx)
         out.append(row)
-    return out
+    import numpy as np
+    return np.asarray(out)
