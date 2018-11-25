@@ -5,25 +5,25 @@
 def costFunctionReg(theta, x, y, _lambda):
     import numpy as np
     from ex2_logistic_regression.sigmoid import sigmoid
-    h = sigmoid(x * theta.T)
+    h = sigmoid(np.dot(x, theta.T))
 
     m, _ = np.shape(x)
-    cost = (sum((-y) * np.log(h) - (1 - y) * (np.log(1 - h))))[0] / m
+    cost = (np.dot(-y, np.log(h)) - np.dot(1 - y, (np.log(1 - h))))
     reg_param = sum(np.power(theta[1:], 2)) * _lambda / 2 / m
-    return cost + reg_param
+    return (cost + reg_param) / m
 
 
 def compute_grad_reg(theta, x, y, _lambda):
     import numpy as np
-    x_row, x_col = np.shape(x)
+    m, n = np.shape(x)
     from ex2_logistic_regression.sigmoid import sigmoid
 
-    h = sigmoid(x * theta.T)[0]
+    h = sigmoid(np.dot(x, theta.T))
     t = h - y
-    grad = sum(t * x) / x_row
+    grad = [sum(np.dot(t, x)) / m] * n
 
-    for c in range(1, x_col):
-        grad[c] = grad[c] + _lambda / x_row * theta[c]
+    for c in range(1, n):
+        grad[c] = grad[c] + _lambda / m * theta[c]
     return grad
 
 
@@ -47,5 +47,4 @@ def compute_grad_reg_2(theta, X, y, _lambda):
         else:
             grad[i] = (np.sum(term) / len(X)) + ((_lambda / len(X)) * theta[:, i])
 
-    print(len(grad))
     return grad
