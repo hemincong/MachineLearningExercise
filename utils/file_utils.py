@@ -20,7 +20,7 @@ def read_csv_split_last_col(file_name):
     row, col = np.shape(mm)
     x = mm[0:row, 0:col - 1]
     y = mm[0:row, col - 1:col]
-    return x, y
+    return x, y.flatten()
 
 
 def read_csv_split_last_col_and_add_one(file_name):
