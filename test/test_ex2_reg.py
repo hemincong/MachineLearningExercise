@@ -46,7 +46,7 @@ class test_ex2_reg(unittest.TestCase):
         from ex2_logistic_regression.mapFeature import mapFeature
         from utils import file_utils
         import numpy as np
-        from ex2_logistic_regression.ex2 import line_regression_reg_by_fmin
+        from ex2_logistic_regression.ex2_reg import line_regression_reg_by_fmin
 
         x, y = file_utils.read_csv_split_last_col_and_add_one(data_file_path)
 
@@ -60,7 +60,7 @@ class test_ex2_reg(unittest.TestCase):
         from ex2_logistic_regression.mapFeature import mapFeature
         from utils import file_utils
         import numpy as np
-        from ex2_logistic_regression.ex2 import line_regression_reg_by_fmin_2
+        from ex2_logistic_regression.ex2_reg import line_regression_reg_by_fmin_2
         x, y = file_utils.read_csv_split_last_col_and_add_one(data_file_path)
         X = np.asarray(mapFeature(x[:, 1], x[:, 2]))
         theta = np.zeros(X.shape[1])
