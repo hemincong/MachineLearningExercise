@@ -66,3 +66,21 @@ class test_ex2_reg(unittest.TestCase):
         theta = np.zeros(X.shape[1])
         res = line_regression_reg_by_fmin_2(theta, X, y, 1)
         print(res)
+
+    def test_plotData(self):
+        from ex2_logistic_regression.plotData import plotData
+        from utils import file_utils
+        import matplotlib.pyplot as plt
+
+        x, y = file_utils.read_csv_split_last_col(data_file_path)
+        plotData(x, y)
+        plt.title('Figure 3: Plot of traning data')
+        plt.xlabel('Marcochip test 1')
+        plt.ylabel('Marcochip test 2')
+        plt.show()
+
+    def test_plotDecisionBoundary(self):
+        from ex2_logistic_regression.plotDecisionBoundary import plotDecisionBoundary
+        plotDecisionBoundary(data_file_path)
+
+

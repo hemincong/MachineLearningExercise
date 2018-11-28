@@ -1,10 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-if __name__ == "__main__":
+
+def plotDecisionBoundary(data_file_path):
     from utils.file_utils import read_csv
 
-    data = read_csv("../test/resource/ex2data2.txt")
+    data = read_csv(data_file_path)
 
     import numpy as np
 
@@ -36,3 +37,4 @@ if __name__ == "__main__":
     plt.scatter(x1, y1, marker='+', color='b', s=10, label='y=1')
     plt.legend(loc='upper right')
     plt.show()
+

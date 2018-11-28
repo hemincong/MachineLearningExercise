@@ -76,3 +76,15 @@ class test_ex2_cost(unittest.TestCase):
                 count = count + 1
 
         self.assertEqual(count, 89)
+
+    def test_plotData(self):
+        from ex2_logistic_regression.plotData import plotData
+        from utils import file_utils
+        import matplotlib.pyplot as plt
+
+        x, y = file_utils.read_csv_split_last_col(data_file_path)
+        plotData(x, y)
+        plt.title('Scatter plot of training data')
+        plt.xlabel('Exam 1 score')
+        plt.ylabel('Exam 2 score')
+        plt.show()
