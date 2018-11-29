@@ -2,39 +2,31 @@
 # -*- coding: utf-8 -*-
 
 
-def plotDecisionBoundary(data_file_path):
-    from utils.file_utils import read_csv
+def f_y(theta, x):
+    return (theta[0] + theta[1] * x) / - theta[2]
 
-    data = read_csv(data_file_path)
 
+def plotDecisionBoundary(theta, X, y):
     import numpy as np
-
-    m = np.asarray(data)
-    row, col = m.shape
-    x = m[0:row, 0]
-    y = m[0:row, 1]
-    z = m[0:row, 2]
-
-    x0 = []
-    x1 = []
-    y0 = []
-    y1 = []
-    for i in range(row):
-        if z[i] == 0:
-            x0.append(x[i])
-            y0.append(y[i])
-        else:
-            x1.append(x[i])
-            y1.append(y[i])
-
     import matplotlib.pyplot as plt
+    from ex2_logistic_regression.plotData import plotData
+    plotData(X[:, 1:], y)
 
-    plt.figure(1)
-    plt.title('Figure 3: Plot of traning data')
-    plt.xlabel('Marcochip test 1')
-    plt.ylabel('Marcochip test 2')
-    plt.scatter(x0, y0, marker='o', color='y', s=10, label='y=0')
-    plt.scatter(x1, y1, marker='+', color='b', s=10, label='y=1')
-    plt.legend(loc='upper right')
-    plt.show()
+    m, n = np.shape(X)
+    if n <= 3:
+        min_x = min(X[:,1])
+        max_x = max(X[:,1])
+        x = np.array([X[:, 1].min(), X[:, 1].max()])
+        y = [f_y(theta, min_x), f_y(theta, max_x)]
 
+        plt.figure(1)
+        plt.title('Linear regression With GCD')
+        plt.xlabel('x')
+        plt.ylabel('y')
+        plt.scatter(x, y, marker='o', color='k', s=10, label='point')
+        plt.legend(loc='lower right')
+        plt.plot(x, y)
+        plt.show()
+    else:
+        # TODO:
+        pass

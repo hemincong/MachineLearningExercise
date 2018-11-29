@@ -88,3 +88,13 @@ class test_ex2_cost(unittest.TestCase):
         plt.xlabel('Exam 1 score')
         plt.ylabel('Exam 2 score')
         plt.show()
+
+    def test_plotDecisionBoundary(self):
+        from utils import file_utils
+        x, y = file_utils.read_csv_split_last_col_and_add_one(data_file_path)
+        from ex2_logistic_regression.ex2 import line_regression_by_fmin
+        ret = line_regression_by_fmin(x, y)
+        print(ret)
+        from ex2_logistic_regression.plotDecisionBoundary import plotDecisionBoundary
+        ret = line_regression_by_fmin(x, y)
+        plotDecisionBoundary(ret.x, x, y)
