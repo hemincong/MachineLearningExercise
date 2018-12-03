@@ -81,6 +81,19 @@ class test_ex2_reg(unittest.TestCase):
 
     def test_plotDecisionBoundary(self):
         from ex2_logistic_regression.plotDecisionBoundary import plotDecisionBoundary
-        plotDecisionBoundary(data_file_path)
+        from utils import file_utils
+        import numpy as np
+        from ex2_logistic_regression.mapFeature import mapFeature
+        from ex2_logistic_regression.ex2_reg import line_regression_reg_by_fmin_2
+        import matplotlib.pyplot as plt
+
+        x, y = file_utils.read_csv_split_last_col_and_add_one(data_file_path)
+        X = np.asarray(mapFeature(x[:, 1], x[:, 2]))
+        theta = np.zeros(X.shape[1])
+        theta, cost = line_regression_reg_by_fmin_2(theta, X, y, 1)
+        plotDecisionBoundary(theta, X, y)
+        plt.xlabel('Microchip Test 1')
+        plt.ylabel('Microchip Test 2')
+        plt.show()
 
 

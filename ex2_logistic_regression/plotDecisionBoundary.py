@@ -14,9 +14,11 @@ def plotDecisionBoundary(theta, X, y):
 
     m, n = np.shape(X)
     if n <= 3:
-        min_x = min(X[:,1])
-        max_x = max(X[:,1])
+        min_x = min(X[:, 1])
+        max_x = max(X[:, 1])
         x = np.array([X[:, 1].min(), X[:, 1].max()])
+        if n < 2:
+            theta[3] = 1
         y = [f_y(theta, min_x), f_y(theta, max_x)]
 
         plt.figure(1)
@@ -28,5 +30,14 @@ def plotDecisionBoundary(theta, X, y):
         plt.plot(x, y)
         plt.show()
     else:
-        # TODO:
-        pass
+        from ex2_logistic_regression.mapFeature import mapFeature
+        x = np.linspace(-1, 1.5, 50)
+        y = np.linspace(-1, 1.5, 50)
+        z = np.zeros(shape=(len(x), len(y)))
+        for i in range(len(x)):
+            for j in range(len(y)):
+                z[i, j] = (mapFeature([x[i]], [y[j]]).dot(theta))
+        z = z.T
+        c = plt.contour(x, y, z, 0, origin='upper')
+        c.collections[0].set_label('Decision Boundary')
+
