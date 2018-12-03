@@ -13,12 +13,12 @@ def line_regression_reg_by_fmin_2(theta, X, y, _lambda):
     return theta, cost
 
 
-def line_regression_reg_by_fmin(theta, X, y, lamda):
+def line_regression_reg_by_fmin(theta, X, y, _lambda):
     import scipy.optimize as op
     from ex2_logistic_regression.costFunctionReg import costFunctionReg
     result = op.minimize(costFunctionReg,
                          theta,
-                         args=(X, y, lamda),
+                         args=(X, y, _lambda),
                          method='BFGS',
                          options={"maxiter": 500, "disp": True})
     return result.x, result.fun
