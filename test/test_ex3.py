@@ -21,3 +21,18 @@ class test_ex3(unittest.TestCase):
         X = np.array([im.reshape(400) for im in X])
         plot_100_image(X)
         plt.show()
+
+    def test_lrCostFunction(self):
+        from ex3_neural_network.lrCostFunction import lrCostFunction
+        data = sio.loadmat(data_file)
+        X = data.get('X')
+        X = np.array([im.reshape((20, 20)).T for im in X])
+        # and I flat the image again to preserve the vector presentation
+        X = np.array([im.reshape(400) for im in X])
+        y = data.get('y')
+        theta = np.zeros(X.shape[1])
+        ret = lrCostFunction(theta, X, y, 1)
+        #print(ret)
+        from ex3_neural_network.lrCostFunction import compute_grad
+        grad = compute_grad(theta, X, y)
+        print(grad)
