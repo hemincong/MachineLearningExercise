@@ -22,17 +22,26 @@ class test_ex3(unittest.TestCase):
         plot_100_image(X)
         plt.show()
 
-    def test_lrCostFunction(self):
-        from ex3_neural_network.lrCostFunction import lrCostFunction
+    def test_compute_cost(self):
+        from ex3_neural_network.lrCostFunction import compute_cost
         data = sio.loadmat(data_file)
         X = data.get('X')
         X = np.array([im.reshape((20, 20)).T for im in X])
-        # and I flat the image again to preserve the vector presentation
         X = np.array([im.reshape(400) for im in X])
         y = data.get('y')
-        theta = np.zeros(X.shape[1])
-        ret = lrCostFunction(theta, X, y, 1)
-        #print(ret)
-        from ex3_neural_network.lrCostFunction import compute_grad
-        grad = compute_grad(theta, X, y)
-        print(grad)
+        m, n = X.shape
+        theta = np.zeros(n)
+        ret = compute_cost(theta, X, y, 1)
+        self.assertAlmostEqual(ret, 801971.28, delta=0.01)
+
+    def test_compute_grad(self):
+        from ex3_neural_network.lrCostFunction import gradient, lrCostFunction
+        data = sio.loadmat(data_file)
+        X = data.get('X')
+        X = np.array([im.reshape((20, 20)).T for im in X])
+        X = np.array([im.reshape(400) for im in X])
+        y = data.get('y')
+        m, n = X.shape
+        theta = np.zeros(n)
+        grad = gradient(theta, X, y, 1)
+        self.assertEqual(grad.shape[0], 400 * 5000)
