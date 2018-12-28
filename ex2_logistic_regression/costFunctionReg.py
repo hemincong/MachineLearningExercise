@@ -25,26 +25,3 @@ def compute_grad_reg(theta, x, y, _lambda):
     for c in range(1, n):
         grad[c] = grad[c] + _lambda / m * theta[c]
     return grad
-
-
-def compute_grad_reg_2(theta, X, y, _lambda):
-    import numpy as np
-    theta = np.matrix(theta)
-    X = np.matrix(X)
-    y = np.matrix(y)
-
-    parameters = int(theta.ravel().shape[1])
-    grad = np.zeros(parameters)
-
-    from ex2_logistic_regression.sigmoid import sigmoid
-    error = sigmoid(X * theta.T) - y
-
-    for i in range(parameters):
-        term = np.multiply(error, X[:, i])
-
-        if i == 0:
-            grad[i] = np.sum(term) / len(X)
-        else:
-            grad[i] = (np.sum(term) / len(X)) + ((_lambda / len(X)) * theta[:, i])
-
-    return grad
