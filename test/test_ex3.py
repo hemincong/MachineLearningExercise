@@ -32,7 +32,7 @@ class test_ex3(unittest.TestCase):
         plt.show()
 
     def test_compute_cost(self):
-        from ex3_neural_network.lrCostFunction import compute_cost
+        from ex3_neural_network.lrCostFunction import lrCostFunction
         data = sio.loadmat(data_file)
         X = data.get('X')
         X = np.array([im.reshape((20, 20)).T for im in X])
@@ -40,7 +40,7 @@ class test_ex3(unittest.TestCase):
         y = data.get('y')
         m, n = X.shape
         theta = np.zeros(n)
-        ret = compute_cost(theta, X, y, 1)
+        ret = lrCostFunction(theta, X, y, 1)
         self.assertAlmostEqual(ret, 801971.28, delta=0.01)
 
     def test_compute_grad(self):

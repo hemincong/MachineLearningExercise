@@ -4,7 +4,7 @@
 import numpy as np
 
 
-def compute_cost(theta, X, y, _lambda):
+def lrCostFunction(theta, X, y, _lambda):
     m, n = X.shape
     from utils.sigmoid import sigmoid
     theta = theta.reshape(n, 1)
