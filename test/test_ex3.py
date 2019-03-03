@@ -31,8 +31,18 @@ class test_ex3(unittest.TestCase):
         plot_100_image(X)
         plt.show()
 
-    def test_compute_cost(self):
+    def test_compute_cost_2(self):
+        theta_t = np.array([-2, -1, 1, 2])
+        X_t = np.column_stack([np.ones(5), np.arange(0.1, 1.6, 0.1).reshape((5, 3), order='F')])
+        y_t = np.array([1, 0, 1, 0, 1]) >= 0.5
+        lambda_t = 3
         from ex3_neural_network.lrCostFunction import lrCostFunction
+        J, grad = lrCostFunction(theta_t, X_t, y_t, lambda_t)
+        np.testing.assert_almost_equal(grad.tolist(), [0.146561, -0.548558, 0.724722, 1.398003], 5)
+        np.testing.assert_almost_equal(J, 2.534819, 5)
+
+    def test_compute_cost(self):
+        from ex3_neural_network.lrCostFunction import costFunction
         data = sio.loadmat(data_file)
         X = data.get('X')
         X = np.array([im.reshape((20, 20)).T for im in X])
@@ -40,7 +50,7 @@ class test_ex3(unittest.TestCase):
         y = data.get('y')
         m, n = X.shape
         theta = np.zeros(n)
-        ret = lrCostFunction(theta, X, y, 1)
+        ret,_ = costFunction(theta, X, y, 1)
         self.assertAlmostEqual(ret, 801971.28, delta=0.01)
 
     def test_compute_grad(self):
