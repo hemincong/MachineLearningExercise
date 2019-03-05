@@ -64,3 +64,15 @@ class test_ex3(unittest.TestCase):
         theta = np.zeros(n)
         grad = gradient(theta, X, y, 1)
         self.assertEqual(grad.shape[0], 400 * 5000)
+
+    def test_one_vs_all(self):
+        from ex3_neural_network.oneVsAll import oneVsAll
+        data = sio.loadmat(data_file)
+        lambda_ = 1
+        num_labels = 10
+        X = data.get('X')
+        y = data.get('y').reshape(-1)
+        all_theta = oneVsAll(X, y, num_labels, lambda_)
+        print(all_theta)
+
+
