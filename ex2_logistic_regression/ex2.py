@@ -18,6 +18,3 @@ def line_regression_by_fmin(x, y):
                        jac=compute_grad,
                        options={"maxiter": 400},
                        )
-
-
-
