@@ -23,11 +23,20 @@ def gradient(theta, X, y, _lambda):
     return grad_reg_without_reg.flatten()
 
 
-def lrCostFunction(theta, X, y, _lambda):
+def costFunctionReg(theta, X, y, _lambda):
+    m, n = X.shape
+    return costFunction(theta, X, y, _lambda) + (np.dot(theta[1:n], theta[1:n]) / m / 2 * _lambda)
+
+
+def gradReg(theta, X, y, _lambda):
     m, n = X.shape
 
-    cost = costFunction(theta, X, y, _lambda) + (np.dot(theta[1:n], theta[1:n]) / m / 2 * _lambda)
-    grad_reg_without_reg = gradient(theta, X, y, _lambda)
-    grad_reg = grad_reg_without_reg + (float(_lambda) / m) * theta
-    grad_reg[0] = grad_reg_without_reg[0]
-    return cost, grad_reg
+    grad = gradient(theta, X, y, _lambda)
+    grad[1:] += _lambda / m * theta[1:]
+    return grad
+
+
+def lrCostFunction(theta, X, y, _lambda):
+    cost = costFunctionReg(theta, X, y, _lambda)
+    grad = gradReg(theta, X, y, _lambda)
+    return cost, grad
