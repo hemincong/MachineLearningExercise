@@ -10,7 +10,7 @@ def oneVsAll(X, y, num_labels, _lambda):
     all_theta = np.zeros((num_labels, n + 1))
     X = np.insert(X, 0, 1, axis=1)
     initial_theta = np.zeros(n + 1)
-    options = {'disp': True, 'maxiter': 400}
+    options = {'disp': False, 'maxiter': 400}
     from ex3_neural_network.lrCostFunction import costFunctionReg, gradReg
     fun = lambda theta, y: costFunctionReg(theta, X, y, _lambda)
     jac = lambda theta, y: gradReg(theta, X, y, _lambda)
@@ -27,4 +27,3 @@ def oneVsAll(X, y, num_labels, _lambda):
                           )
         all_theta[c, :] = ret.x
     return all_theta
-
