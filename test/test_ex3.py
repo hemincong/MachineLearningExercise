@@ -75,4 +75,17 @@ class test_ex3(unittest.TestCase):
         all_theta = oneVsAll(X, y, num_labels, lambda_)
         print(all_theta)
 
+    def test_predict_one_vs_all(self):
+        from ex3_neural_network.oneVsAll import oneVsAll
+        from ex3_neural_network.predictOneVsAll import predictOneVsAll
+        data = sio.loadmat(data_file)
+        lambda_ = 0.5
+        num_labels = 10
+        X = data.get('X')
+        y = data.get('y').reshape(-1)
+        all_theta = oneVsAll(X, y, num_labels, lambda_)
+        ret = predictOneVsAll(all_theta, X) + 1
+        radio = np.mean((ret == y))
+        self.assertGreater(radio, 0.90)
+
 
