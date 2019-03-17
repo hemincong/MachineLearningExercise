@@ -5,10 +5,7 @@ import numpy as np
 
 
 def predictOneVsAll(all_theta, X):
-    m, n = X.shape
-
     num_labels, _ = all_theta.shape
-    p = np.zeros((m, 1))
     X = np.insert(X, 0, 1, axis=1)
 
     from utils.sigmoid import sigmoid
