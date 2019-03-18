@@ -35,4 +35,8 @@ class test_ex3_nn(unittest.TestCase):
         weight_data = sio.loadmat(weight_file)
         Theta1, Theta2 = weight_data['Theta1'], weight_data['Theta2']
         pred = predict(Theta1, Theta2, X)
+        y = data.get('y').reshape(-1)
+        radio = np.mean((pred == y))
+        print("radio : {radio}".format(radio=radio))
+        self.assertGreater(radio, 0.975)
 
