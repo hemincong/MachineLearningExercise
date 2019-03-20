@@ -6,7 +6,7 @@ import scipy.io as sio
 import numpy as np
 import matplotlib.pyplot as plt
 
-from ex3_neural_network.displayData import plot_100_image
+from ex3_neural_network.displayData import plot_100_image, plot_an_image
 
 data_file = "resource/ex3data1.mat"
 weight_file = "resource/ex3weights.mat"
@@ -31,12 +31,32 @@ class test_ex3_nn(unittest.TestCase):
 
         data = sio.loadmat(data_file)
         X = data.get('X')
+        m, n = X.shape
 
         weight_data = sio.loadmat(weight_file)
         Theta1, Theta2 = weight_data['Theta1'], weight_data['Theta2']
         pred = predict(Theta1, Theta2, X)
         y = data.get('y').reshape(-1)
         radio = np.mean((pred == y))
-        print("radio : {radio}".format(radio=radio))
         self.assertGreater(radio, 0.975)
+        print("Training set accuracy: {p}".format(p=radio))
 
+        # check incorrect
+        n_correct = 0
+        incorrect_indices = []
+        for irow in range(m):
+            if predict(Theta1, Theta2, X[irow]) == int(y[irow]):
+                n_correct += 1
+            else:
+                incorrect_indices.append(irow)
+
+        rp = np.random.permutation(incorrect_indices)
+
+        for i in rp:
+            # Display
+            print('Displaying Example Image')
+            pred = predict(Theta1, Theta2, X[i])
+            plot_an_image(X[i])
+            plt.show()
+
+            print('Neural Network Prediction: {:d} (digit {:d})'.format(pred[0], y[i]))
