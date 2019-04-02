@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-def displayData(X, example_width = None):
+def displayData(X, example_width=None):
     """Display 2D data in a nice grid
     [h, display_array] = displayData(X, example_width) displays 2D data
     stored in X in a nice grid.

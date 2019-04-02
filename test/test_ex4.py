@@ -38,7 +38,7 @@ data_file = "resource/ex4data1.mat"
 class test_ex4_nn_back_propagation(unittest.TestCase):
 
     def test_displayData(self):
-        import ex4_NN_back_propagation.displayData as dd
+        import utils.displayData as dd
         # Load Training Data
         print('Loading and Visualizing Data ...')
         mat = scipy.io.loadmat(data_file)

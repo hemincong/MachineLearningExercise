@@ -4,9 +4,6 @@
 import unittest
 import scipy.io as sio
 import numpy as np
-import matplotlib.pyplot as plt
-
-from ex3_neural_network.displayData import plot_100_image, plot_an_image
 
 data_file = "resource/ex3data1.mat"
 weight_file = "resource/ex3weights.mat"
@@ -18,13 +15,15 @@ num_labels = 10
 class test_ex3_nn(unittest.TestCase):
 
     def test_displayData(self):
-        data = sio.loadmat(data_file)
-        X = data.get('X')
-        X = np.array([im.reshape((20, 20)).T for im in X])
-        # and I flat the image again to preserve the vector presentation
-        X = np.array([im.reshape(400) for im in X])
-        plot_100_image(X)
-        plt.show()
+        import utils.displayData as dd
+        # Load Training Data
+        print('Loading and Visualizing Data ...')
+        mat = sio.loadmat(data_file)
+        X = mat["X"]
+        m = X.shape[0]
+        rand_indices = np.random.permutation(m)
+        sel = X[rand_indices[:100], :]
+        dd.displayData(sel)
 
     def test_predict(self):
         from ex3_neural_network.predict import predict
@@ -56,7 +55,4 @@ class test_ex3_nn(unittest.TestCase):
             # Display
             print('Displaying Example Image')
             pred = predict(Theta1, Theta2, X[i])
-            plot_an_image(X[i])
-            plt.show()
-
             print('Neural Network Prediction: {:d} (digit {:d})'.format(pred[0], y[i]))
