@@ -37,10 +37,9 @@ def compute_grad(theta, x, y):
         cost_row = sigmoid(theta.dot(x[r]))
         y_row = y[r]
         for c in range(x_col):
-            grad[c] += ((cost_row - y_row) * x[r][c])[0]
+            grad[c] += ((cost_row - y_row) * x[r][c])
 
-    for c in range(x_col):
-        grad[c] = grad[c] / x_row
+    grad = np.asarray(grad) / x_row
     return grad
 
 
