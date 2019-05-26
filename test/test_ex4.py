@@ -51,3 +51,29 @@ class test_ex4_nn_back_propagation(unittest.TestCase):
         self.assertIsNotNone(Theta2)
 
         # Unroll parameters
+        nn_params = np.concatenate((Theta1.reshape(Theta1.size, order='F'), Theta2.reshape(Theta2.size, order='F')))
+        self.assertIsNotNone(nn_params)
+
+        # ================ Part 3: Compute Cost (Feedforward) ================
+        #  To the neural network, you should first start by implementing the
+        #  feedforward part of the neural network that returns the cost only. You
+        #  should complete the code in nnCostFunction.m to return cost. After
+        #  implementing the feedforward to compute the cost, you can verify that
+        #  your implementation is correct by verifying that you get the same cost
+        #  as us for the fixed debugging parameters.
+        #
+        #  We suggest implementing the feedforward cost *without* regularization
+        #  first so that it will be easier for you to debug. Later, in part 4, you
+        #  will get to implement the regularized cost.
+        print('Feedforward Using Neural Network ...')
+
+        # Weight regularization parameter (we set this to 0 here).
+        _lambda = 0
+
+        #J = nnCostFunction(nn_params, input_layer_size, hidden_layer_size, ...
+                           #num_labels, X, y, _lambda);
+
+        #print("Cost at parameters (loaded from ex4weights): {f}".format(f=J))
+        print('(this value should be about 0.287629)')
+        #self.assertAlmostEqual(J, 0.287529, delta=0.001)
+
