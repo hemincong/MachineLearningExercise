@@ -36,6 +36,13 @@ class test_ex4_nn_back_propagation(unittest.TestCase):
         dd.displayData(sel)
 
     def test_nnCostFunction(self):
+
+        # Load Training Data
+        print('Loading and Visualizing Data ...')
+        mat = scipy.io.loadmat(data_file)
+        X = mat["X"]
+        y = mat["y"]
+        y = y.flatten()
         # ================ Part 2: Loading Parameters ================
         # In this part of the exercise, we load some pre-initialized
         # neural network parameters.
@@ -70,10 +77,10 @@ class test_ex4_nn_back_propagation(unittest.TestCase):
         # Weight regularization parameter (we set this to 0 here).
         _lambda = 0
 
-        #J = nnCostFunction(nn_params, input_layer_size, hidden_layer_size, ...
-                           #num_labels, X, y, _lambda);
+        from ex4_NN_back_propagation.nnCostFunction import nnCostFunction
+        J, _ = nnCostFunction(nn_params, input_layer_size, hidden_layer_size, num_labels, X, y, _lambda)
 
-        #print("Cost at parameters (loaded from ex4weights): {f}".format(f=J))
+        print("Cost at parameters (loaded from ex4weights): {f}".format(f=J))
         print('(this value should be about 0.287629)')
-        #self.assertAlmostEqual(J, 0.287529, delta=0.001)
+        self.assertAlmostEqual(J, 0.287529, delta=0.001)
 

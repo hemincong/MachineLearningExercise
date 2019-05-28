@@ -4,7 +4,7 @@ from utils.sigmoid import sigmoid
 import numpy as np
 
 
-def nCostFunction(nn_params, input_layer_size, hidden_layer_size, num_labels, X, y, _lambda):
+def nnCostFunction(nn_params, input_layer_size, hidden_layer_size, num_labels, X, y, _lambda):
     # NNCOSTFUNCTION Implements the neural network cost function for a two layer
     # neural network which performs classification
     # [J grad] = NNCOSTFUNCTON(nn_params, hidden_layer_size, num_labels, ...
@@ -65,16 +65,40 @@ def nCostFunction(nn_params, input_layer_size, hidden_layer_size, num_labels, X,
     #
 
     # add bias 1
-    X = np.column_stack((np.ones(m, 1)), X)
+    X = np.column_stack((np.ones((m, 1)), X))
 
     # a2 = X . dot Theta1.T
     a2 = sigmoid(np.dot(X, Theta1.T))
 
     # a2 add bias
-    a3 = np.column_stack((np.ones((a2.shape[0], 1)), a2))
+    a2 = np.column_stack((np.ones((a2.shape[0], 1)), a2))
 
     a3 = sigmoid(np.dot(a2, Theta2.T))
 
+    # Also, recall that whereas the original labels (in the variable y) were 1, 2, ..., 10, for the purpose of
+    # training a neural network, we need to recode the labels as vectors containing only values 0 or 1, so that For
+    # example, if x(i) is an image of the digit 5, then the corresponding y(i) (that you should use with the cost
+    # function) should be a 10-dimensional vector with y5 = 1, and the other elements equal to 0
+    labels = y
+    y = np.zeros((m, num_labels))
+    for i in range(m):
+        y[i, labels[i] - 1] = 1
 
+    # You should implement the feedforward computation that computes hθ(x(i)) for every example i and sum the cost
+    # over all examples. Your code should also work for a dataset of any size, with any number of labels (you can
+    # assume that there are always at least K ≥ 3 labels).
+    cost = 0
+    for i in range(m):
+        cost += np.sum(y[i] * np.log(a3[i]) + (1 - y[i]) * np.log(1 - a3[i]))
 
+    J = -(1.0 / m) * cost
 
+    theta1_square = np.sum(np.square(Theta1[:, 1:]))
+    theta2_square = np.sum(np.square(Theta2[:, 1:]))
+
+    J = J + _lambda * (theta1_square + theta2_square) / 2 / m
+    # cost = 0
+    # for i in range(m):
+    # print(len(a3[i]))
+    # a = np.dot(y, np.log(a3))
+    return J, 0
