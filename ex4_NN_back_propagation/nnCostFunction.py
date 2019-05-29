@@ -97,8 +97,4 @@ def nnCostFunction(nn_params, input_layer_size, hidden_layer_size, num_labels, X
     theta2_square = np.sum(np.square(Theta2[:, 1:]))
 
     J = J + _lambda * (theta1_square + theta2_square) / 2 / m
-    # cost = 0
-    # for i in range(m):
-    # print(len(a3[i]))
-    # a = np.dot(y, np.log(a3))
     return J, 0
