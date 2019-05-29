@@ -84,3 +84,19 @@ class test_ex4_nn_back_propagation(unittest.TestCase):
         print('(this value should be about 0.287629)')
         self.assertAlmostEqual(J, 0.287529, delta=0.001)
 
+        # =============== Part 4: Implement Regularization ===============
+        #  Once your cost function implementation is correct, you should now
+        #  continue to implement the regularization with the cost.
+        #
+        print('Checking Cost Function (Regularization) ... \n')
+
+        # Weight regularization parameter (we set this to 1 here).
+        _lambda = 1
+        J, _ = nnCostFunction(nn_params, input_layer_size, hidden_layer_size, num_labels, X, y, _lambda)
+
+        print("Cost at parameters (loaded from ex4weights): {f}".format(f=J))
+        print('(this value should be about 0.383770))')
+        self.assertAlmostEqual(J, 0.383770, delta=0.001)
+
+
+
