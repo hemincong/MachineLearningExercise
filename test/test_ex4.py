@@ -35,8 +35,21 @@ class test_ex4_nn_back_propagation(unittest.TestCase):
 
         dd.displayData(sel)
 
-    def test_nnCostFunction(self):
+    def test_sigmoid_gradient(self):
+        # ================ Part 5: Sigmoid Gradient ================
+        # Before you start implementing the neural network, you will first
+        # implement the gradient for the sigmoid function.You should complete the
+        # code in the sigmoidGradient.py file.
+        print('Evaluating sigmoid gradient...')
 
+        from ex4_NN_back_propagation.sigmoidGradient import sigmoidGradient
+        g = sigmoidGradient(np.asarray([1, -0.5, 0, 0.5, 1]))
+        print('Sigmoid gradient evaluated at [1 -0.5 0 0.5 1]:  ')
+        print(g)
+        self.assertAlmostEqual(g[0], 1.36, delta=0.01)
+        self.assertAlmostEqual(g[1], 2.64, delta=0.01)
+
+    def test_nnCostFunction(self):
         # Load Training Data
         print('Loading and Visualizing Data ...')
         mat = scipy.io.loadmat(data_file)
