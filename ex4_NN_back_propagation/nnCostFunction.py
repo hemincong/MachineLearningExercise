@@ -24,7 +24,7 @@ def nnCostFunction(nn_params, input_layer_size, hidden_layer_size, num_labels, X
     Theta2 = np.reshape(nn_params[hidden_layer_size * (input_layer_size + 1):],
                         (num_labels, hidden_layer_size + 1), order='F')
 
-    # Setup some useful vaiables
+    # Setup some useful variables
     m = len(X)
 
     # # You need to return the following variables correctly
@@ -97,4 +97,47 @@ def nnCostFunction(nn_params, input_layer_size, hidden_layer_size, num_labels, X
     theta2_square = np.sum(np.square(Theta2[:, 1:]))
 
     J = J + _lambda * (theta1_square + theta2_square) / 2 / m
-    return J, 0
+
+    from ex4_NN_back_propagation.sigmoidGradient import sigmoidGradient
+    delta_l_1 = 0
+    delta_l_2 = 0
+    for i in range(m):
+        # 1. Set the input layer’s values (a(1)) to the t-th training example x(t). Perform a feedforward pass (
+        # Figure 2), computing the activations (z(2), a(2), z(3), a(3)) for layers 2 and 3. Note that you need to add
+        # a +1 term to ensure that the vectors of activations for layers a(1) and a(2) also include the bias unit. In
+        # Octave, if a 1 is a column vector, adding one corresponds to a 1 = [1 ; a 1].
+        a1 = X[i]
+        z2 = np.dot(a1, Theta1.T)
+        a2 = sigmoid(z2)
+        a2 = np.concatenate((np.ones(1), a2))
+        z3 = np.dot(a2, Theta2.T)
+        a3 = sigmoid(z3)
+        a3 = np.concatenate((np.ones(1), a3))
+
+        # 2. For each output unit k in layer 3 (the output layer), set δ(3) = (a(3) − yk), where yk ∈ {0,1} indicates
+        # whether the current training example belongs to class k (yk = 1), or if it belongs to a different class (
+        # yk = 0). You may find logical arrays helpful for this task (explained in the previous programming
+        # exercise).
+        delta3 = np.zeros(num_labels)
+        for l in range(num_labels):
+            delta3[l] = a3[l] - y[i, l]
+
+        # 3. For the hidden layer l = 2, set de
+        # delta 2 = theta(2).T * theta(3) * g_pi(z2))
+        delta2 = np.dot(Theta2[:, 1:].T, delta3) * sigmoidGradient(z2)
+
+        # 4. Accumulate the gradient from this example using the following formula. Note that you should skip or
+        # remove δ(2). In Octave, removing δ(2) corresponds to delta 2 = delta 2(2:end).
+        # ∆(l) = ∆(l) + δ(l+1)(a(l))T
+        delta_l_1 += np.outer(delta2, a1.T)
+        delta_l_2 += np.outer(delta3, a2.T)
+
+    # 5. Obtain the (unregularized) gradient for the neural network cost function by dividing the accumulated
+    # gradients by 1/m
+    Theta1_grad = delta_l_1 / m
+    Theta2_grad = delta_l_2 / m
+
+    # Unroll gradients
+    grad = np.concatenate((Theta1_grad.reshape(Theta1_grad.size, order='F'), Theta2_grad.reshape(Theta2_grad.size, order='F')))
+
+    return J, grad
