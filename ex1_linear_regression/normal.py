@@ -7,6 +7,7 @@ def norm_list(l):
     import numpy as np
     return list(map(lambda x: (x - np.mean(l)) / np.std(l), l))
 
+
 def norm_matrix(m):
     import numpy as np
     row, col = np.shape(m)

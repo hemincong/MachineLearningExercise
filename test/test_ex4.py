@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 
-import scipy.io
-import numpy as np
 import unittest
+
+import numpy as np
+import scipy.io
 
 # Setup the parameters you will use for this exercise
 input_layer_size = 400  # 20x20 Input Images of Digits
@@ -110,7 +111,3 @@ class test_ex4_nn_back_propagation(unittest.TestCase):
         print("Cost at parameters (loaded from ex4weights): {f}".format(f=J))
         print('(this value should be about 0.383770))')
         self.assertAlmostEqual(J, 0.383770, delta=0.001)
-
-
-
-

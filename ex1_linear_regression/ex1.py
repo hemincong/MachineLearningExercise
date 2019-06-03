@@ -114,4 +114,3 @@ def drew_J_theta():
     fig.colorbar(surf, shrink=0.5, aspect=5)
 
     plt.show()
-

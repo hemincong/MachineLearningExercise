@@ -2,8 +2,9 @@
 # -*- coding: utf-8 -*-
 
 import unittest
-import scipy.io as sio
+
 import numpy as np
+import scipy.io as sio
 
 data_file = "resource/ex3data1.mat"
 weight_file = "resource/ex3weights.mat"

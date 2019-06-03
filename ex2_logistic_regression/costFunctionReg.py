@@ -12,6 +12,7 @@ def costFunctionReg(theta, x, y, _lambda):
     reg_param = sum(np.power(theta[1:], 2)) * _lambda / 2 / m
     return (cost + reg_param) / m
 
+
 def compute_grad_reg(theta, x, y, _lambda):
     import numpy as np
     m, n = np.shape(x)

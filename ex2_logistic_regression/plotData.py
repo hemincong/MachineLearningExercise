@@ -11,4 +11,3 @@ def plotData(X, y):
     plt.scatter(X[neg, 0], X[neg, 1], color='y', marker='o')
 
     plt.grid()
-

@@ -2,8 +2,9 @@
 # -*- coding: utf-8 -*-
 
 import unittest
-import scipy.io as sio
+
 import numpy as np
+import scipy.io as sio
 
 data_file = "resource/ex3data1.mat"
 
@@ -77,5 +78,3 @@ class test_ex3(unittest.TestCase):
         ret = predictOneVsAll(all_theta, X) + 1
         radio = np.mean((ret == y))
         self.assertGreater(radio, 0.90)
-
-

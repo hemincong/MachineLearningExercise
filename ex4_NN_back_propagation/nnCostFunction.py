@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
-from utils.sigmoid import sigmoid
 import numpy as np
+
+from utils.sigmoid import sigmoid
 
 
 def nnCostFunction(nn_params, input_layer_size, hidden_layer_size, num_labels, X, y, _lambda):
@@ -138,6 +139,7 @@ def nnCostFunction(nn_params, input_layer_size, hidden_layer_size, num_labels, X
     Theta2_grad = delta_l_2 / m
 
     # Unroll gradients
-    grad = np.concatenate((Theta1_grad.reshape(Theta1_grad.size, order='F'), Theta2_grad.reshape(Theta2_grad.size, order='F')))
+    grad = np.concatenate(
+        (Theta1_grad.reshape(Theta1_grad.size, order='F'), Theta2_grad.reshape(Theta2_grad.size, order='F')))
 
     return J, grad

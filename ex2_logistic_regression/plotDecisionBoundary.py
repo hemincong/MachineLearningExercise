@@ -40,4 +40,3 @@ def plotDecisionBoundary(theta, X, y):
         z = z.T
         c = plt.contour(x, y, z, 0, origin='upper')
         c.collections[0].set_label('Decision Boundary')
-
