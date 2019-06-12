@@ -113,7 +113,6 @@ def nnCostFunction(nn_params, input_layer_size, hidden_layer_size, num_labels, X
         a2 = np.concatenate((np.ones(1), a2))
         z3 = np.dot(a2, Theta2.T)
         a3 = sigmoid(z3)
-        a3 = np.concatenate((np.ones(1), a3))
 
         # 2. For each output unit k in layer 3 (the output layer), set δ(3) = (a(3) − yk), where yk ∈ {0,1} indicates
         # whether the current training example belongs to class k (yk = 1), or if it belongs to a different class (
