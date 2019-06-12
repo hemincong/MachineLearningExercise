@@ -139,6 +139,6 @@ def nnCostFunction(nn_params, input_layer_size, hidden_layer_size, num_labels, X
 
     # Unroll gradients
     grad = np.concatenate(
-        (Theta1_grad.reshape(Theta1_grad.size, order='F'), Theta2_grad.reshape(Theta2_grad.size, order='F')))
+        (Theta1_grad.reshape(np.size(Theta1_grad), order='F'), Theta2_grad.reshape(Theta2_grad.size, order='F')))
 
     return J, grad
