@@ -47,8 +47,8 @@ class test_ex4_nn_back_propagation(unittest.TestCase):
         g = sigmoidGradient(np.asarray([1, -0.5, 0, 0.5, 1]))
         print('Sigmoid gradient evaluated at [1 -0.5 0 0.5 1]:  ')
         print(g)
-        self.assertAlmostEqual(g[0], 1.36, delta=0.01)
-        self.assertAlmostEqual(g[1], 2.64, delta=0.01)
+        self.assertAlmostEqual(g[0], 0.196, delta=0.01)
+        self.assertAlmostEqual(g[1], 0.235, delta=0.01)
 
     def test_nnCostFunction(self):
         # Load Training Data
