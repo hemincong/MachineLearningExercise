@@ -111,3 +111,77 @@ class test_ex4_nn_back_propagation(unittest.TestCase):
         print("Cost at parameters (loaded from ex4weights): {f}".format(f=J))
         print('(this value should be about 0.383770))')
         self.assertAlmostEqual(J, 0.383770, delta=0.001)
+
+    def test_grad_check(self):
+        # CHECKNNGRADIENTS Creates a small neural network to check the
+        # backpropagation gradients
+        #   CHECKNNGRADIENTS(lambda_reg) Creates a small neural network to check the
+        #   backpropagation gradients, it will output the analytical gradients
+        #   produced by your backprop code and the numerical gradients (computed
+        #   using computeNumericalGradient). These two gradient computations should
+        #   result in very similar values.
+        #
+
+        def debugInitializeWeights(fan_out, fan_in):
+            # DEBUGINITIALIZEWEIGHTS Initialize the weights of a layer with fan_in
+            # incoming connections and fan_out outgoing connections using a fixed
+            # strategy, this will help you later in debugging
+            #   W = DEBUGINITIALIZEWEIGHTS(fan_in, fan_out) initializes the weights
+            #   of a layer with fan_in incoming connections and fan_out outgoing
+            #   connections using a fix set of values
+            #
+            #   Note that W should be set to a matrix of size(1 + fan_in, fan_out) as
+            #   the first row of W handles the "bias" terms
+            #
+
+            # Set W to zeros
+            W = np.zeros((fan_out, 1 + fan_in))
+
+            # Initialize W using "sin", this ensures that W is always of the same
+            # values and will be useful for debugging
+            W = np.reshape(np.sin(range(np.size(W))), W.shape) / 10
+            return W
+
+        _input_layer_size = 3
+        _hidden_layer_size = 5
+        _num_labels = 3
+        _m = 5
+        _lambda_reg = 0
+
+        # We generate some 'random' test data
+        Theta1 = debugInitializeWeights(_hidden_layer_size, _input_layer_size)
+        Theta2 = debugInitializeWeights(_num_labels, _hidden_layer_size)
+        # Reusing debugInitializeWeights to generate X
+        X = debugInitializeWeights(_m, _input_layer_size - 1)
+        y = 1 + np.mod(range(_m), _num_labels).T
+
+        # Unroll parameters
+        nn_params = np.concatenate((Theta1.reshape(Theta1.size, order='F'), Theta2.reshape(Theta2.size, order='F')))
+
+        from ex4_NN_back_propagation.nnCostFunction import nnCostFunction
+        # Short hand for cost function
+        cost_func = lambda p: nnCostFunction(p, _input_layer_size, _hidden_layer_size, _num_labels, X, y, _lambda_reg)
+
+        _, grad = cost_func(nn_params)
+
+        from ex4_NN_back_propagation.computeNumericalGradient import computeNumericalGradient
+        numgrad = computeNumericalGradient(cost_func, nn_params)
+
+        print('Numerical Gradient', 'Analytical Gradient')
+        for n in range(np.size(grad)):
+            print("{ng} {g}".format(ng=numgrad[n], g=grad[n]))
+
+        print('The above two columns you get should be very similar.')
+        print('(Left-Your Numerical Gradient, Right-Analytical Gradient)')
+
+        # Evaluate the norm of the difference between two solutions.
+        # If you have a correct implementation, and assuming you used
+        # in computeNumericalGradient.m, then diff below should be less than 1e-9
+        # diff = np.norm(numgrad - grad) / np.norm(numgrad + grad)
+        from decimal import Decimal
+        diff = Decimal(np.linalg.norm(numgrad - grad)) / Decimal(np.linalg.norm(numgrad + grad))
+
+        print('If your backpropagation implementation is correct, then ')
+        print('the relative difference will be small (less than 1e-9).')
+        print('Relative Difference: {diff}'.format(diff=diff))
+        self.assertLess(diff, 1e-9)
