@@ -137,6 +137,17 @@ def nnCostFunction(nn_params, input_layer_size, hidden_layer_size, num_labels, X
     Theta1_grad = delta_l_1 / m
     Theta2_grad = delta_l_2 / m
 
+    # After you have successfully implemeted the backpropagation algorithm, you will add regularization to the
+    # gradient. To account for regularization, it turns out that you can add this as an additional term after
+    # computing the gradients using backpropagation. Specifically, after you have computed ∆(l) using
+    # backpropagation, you ij should add regularization using
+    Theta1_grad_unreg = np.copy(Theta1_grad)
+    Theta2_grad_unreg = np.copy(Theta2_grad)
+    Theta1_grad += _lambda / m * Theta1
+    Theta2_grad += _lambda / m * Theta2
+    Theta1_grad[:, 0] = Theta1_grad_unreg[:, 0]
+    Theta2_grad[:, 0] = Theta2_grad_unreg[:, 0]
+
     # Unroll gradients
     grad = np.concatenate(
         (Theta1_grad.reshape(np.size(Theta1_grad), order='F'), Theta2_grad.reshape(Theta2_grad.size, order='F')))
