@@ -15,7 +15,7 @@ def randInitializeWeights(L_in, L_out):
     #
 
     # You need to return the following variables correctly
-    W = np.zeros(L_out, 1 + L_in)
+    W = np.zeros((L_out, 1 + L_in))
 
     # ====================== YOUR CODE HERE ======================
     # Instructions: Initialize W randomly so that we break the symmetry while
@@ -25,5 +25,5 @@ def randInitializeWeights(L_in, L_out):
     #
     #
     epsilon_init = 0.12
-    W = np.random.random(L_out, 1 + L_in) * 2 * epsilon_init - epsilon_init
+    W = np.random.random((L_out, 1 + L_in)) * 2 * epsilon_init - epsilon_init
     return W
