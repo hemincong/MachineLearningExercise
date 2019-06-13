@@ -185,3 +185,30 @@ class test_ex4_nn_back_propagation(unittest.TestCase):
         print('the relative difference will be small (less than 1e-9).')
         print('Relative Difference: {diff}'.format(diff=diff))
         self.assertLess(diff, 1e-9)
+
+    def test_implement_regularization(self):
+        # =============== Part 8: Implement Regularization ===============
+        # Once your backpropagation implementation is correct, you should now
+        # continue to implement the regularization with the cost and gradient.
+        #
+
+        print('Checking Backpropagation (Regularization) ... ')
+        # Check gradients by running checkNNGradients
+        _lambda_reg = 3
+        weight = scipy.io.loadmat(weight_file)
+        Theta1 = weight["Theta1"]
+        Theta2 = weight["Theta2"]
+
+        mat = scipy.io.loadmat(data_file)
+        X = mat["X"]
+        y = mat["y"]
+
+        from ex4_NN_back_propagation.nnCostFunction import nnCostFunction
+        nn_params = np.concatenate((Theta1.reshape(Theta1.size, order='F'), Theta2.reshape(Theta2.size, order='F')))
+        debug_J, grad = nnCostFunction(nn_params, input_layer_size, hidden_layer_size, num_labels, X, y, _lambda_reg)
+
+        # Also output the costFunction debugging values
+        print(
+            'nCost at (fixed) debugging parameters (lambda = 3): {cost} (this value should be about 0.576051)'.format(
+                cost=debug_J))
+        self.assertAlmostEqual(debug_J, 0.576, delta=0.001)
