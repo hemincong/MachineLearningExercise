@@ -186,6 +186,27 @@ class test_ex4_nn_back_propagation(unittest.TestCase):
         print('Relative Difference: {diff}'.format(diff=diff))
         self.assertLess(diff, 1e-9)
 
+    def test_rand_init(self):
+        # ================ Part 6: Initializing Pameters ================
+        #  In this part of the exercise, you will be starting to implment a two
+        #  layer neural network that classifies digits. You will start by
+        #  implementing a function to initialize the weights of the neural network
+        #  (randInitializeWeights.m)
+
+        print('Initializing Neural Network Parameters...')
+
+        from ex4_NN_back_propagation.randInitializeWeights import randInitializeWeights
+        initial_Theta1 = randInitializeWeights(input_layer_size, hidden_layer_size)
+        initial_Theta2 = randInitializeWeights(hidden_layer_size, num_labels)
+
+        # Unroll parameters
+        initial_nn_params = np.concatenate((initial_Theta1.reshape(initial_Theta1.size, order='F'),
+                                            initial_Theta2.reshape(initial_Theta2.size, order='F')))
+        m = initial_nn_params.shape[0]
+        self.assertAlmostEqual(m, (input_layer_size + 1) * hidden_layer_size + (1 + hidden_layer_size) * num_labels)
+        self.assertIsNotNone(initial_nn_params)
+        print(initial_nn_params)
+
     def test_implement_regularization(self):
         # =============== Part 8: Implement Regularization ===============
         # Once your backpropagation implementation is correct, you should now
