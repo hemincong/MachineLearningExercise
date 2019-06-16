@@ -233,3 +233,51 @@ class test_ex4_nn_back_propagation(unittest.TestCase):
             'nCost at (fixed) debugging parameters (lambda = 3): {cost} (this value should be about 0.576051)'.format(
                 cost=debug_J))
         self.assertAlmostEqual(debug_J, 0.576, delta=0.001)
+
+    def test_traning_nn(self):
+        # =================== Part 8 : Training NN ===================
+        # You have now implemented all the code necessary to train a neural
+        # network.To train your neural network, we will now use "fmincg", which
+        # is a function which works similarly to "fminunc".Recall that these
+        # advanced optimizers are able to train our cost functions efficiently as
+        # long as we provide them with the gradient computations.
+        #
+        print("Training Neural Network...")
+
+        _lambda_reg = 1
+        from ex4_NN_back_propagation.randInitializeWeights import randInitializeWeights
+        initial_Theta1 = randInitializeWeights(input_layer_size, hidden_layer_size)
+        initial_Theta2 = randInitializeWeights(hidden_layer_size, num_labels)
+
+        mat = scipy.io.loadmat(data_file)
+        X = mat["X"]
+        y = mat["y"]
+
+        initial_nn_params = np.concatenate(
+            (initial_Theta1.reshape(initial_Theta1.size, order='F'),
+             initial_Theta2.reshape(initial_Theta2.size, order='F')))
+
+        from ex4_NN_back_propagation.nnCostFunction import nnCostFunction
+
+        args = (input_layer_size, hidden_layer_size, num_labels, X, y, _lambda_reg)
+
+        def cost_func(p, _input_layer_size, _hidden_layer_size, _num_labels, _X, _y, __lambda_reg):
+            cost, _ = nnCostFunction(p, _input_layer_size, _hidden_layer_size, _num_labels, _X, _y, _lambda_reg)
+            print("cost={cost}".format(cost=cost))
+            return cost
+
+        def grad_func(p, _input_layer_size, _hidden_layer_size, _num_labels, _X, _y, __lambda_reg):
+            _, grad = nnCostFunction(p, _input_layer_size, _hidden_layer_size, _num_labels, _X, _y, __lambda_reg)
+            print("grad={grad}".format(grad=grad))
+            return grad
+
+        from scipy.optimize import fmin_cg
+        results = fmin_cg(cost_func,
+                          fprime=grad_func,
+                          x0=initial_nn_params,
+                          args=args,
+                          maxiter=50,
+                          disp=True,
+                          full_output=True)
+
+        print(results)
