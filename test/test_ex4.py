@@ -252,6 +252,7 @@ class test_ex4_nn_back_propagation(unittest.TestCase):
         mat = scipy.io.loadmat(data_file)
         X = mat["X"]
         y = mat["y"]
+        y = y.flatten()
 
         initial_nn_params = np.concatenate(
             (initial_Theta1.reshape(initial_Theta1.size, order='F'),
@@ -276,8 +277,33 @@ class test_ex4_nn_back_propagation(unittest.TestCase):
                           fprime=grad_func,
                           x0=initial_nn_params,
                           args=args,
-                          maxiter=50,
+                          maxiter=400,
                           disp=True,
                           full_output=True)
-
         print(results)
+        nn_params = results[0]
+        Theta1 = np.reshape(nn_params[:hidden_layer_size * (input_layer_size + 1)],
+                            (hidden_layer_size, input_layer_size + 1), order='F')
+
+        Theta2 = np.reshape(nn_params[hidden_layer_size * (input_layer_size + 1):],
+                            (num_labels, hidden_layer_size + 1), order='F')
+
+        # ================= Part 9: Visualize Weights =================
+        # You can now "visualize" what the neural network is learning by
+        # displaying the hidden units to see what features they are capturing in
+        # the data.
+        from utils.displayData import displayData
+        displayData(Theta1[:, 1:])
+
+        # ================= Part 10: Implement Predict =================
+        # After training the neural network, we would like to use it to predict
+        # the labels.You will now implement the "predict" function to use the
+        # neural network to predict the labels of the training set.This lets
+        # you compute the training set accuracy.
+        from ex4_NN_back_propagation.prdict import predict
+        pred = predict(Theta1, Theta2, X)
+
+        accuracy = np.mean(pred == y) * 100
+        print('Training Set Accuracy: {accuracy}'.format(accuracy=accuracy))
+
+        self.assertGreater(accuracy, 0.80)
