@@ -31,7 +31,6 @@ class test_ex5_regularized_linear_regressionand_bias_vs_variance(unittest.TestCa
     # the data.
     #
     def test_load_and_visualzing_data(self):
-
         # Load Training Data
         print('Loading and Visualizing Data ...')
 
@@ -58,7 +57,7 @@ class test_ex5_regularized_linear_regressionand_bias_vs_variance(unittest.TestCa
     # =========== Part 2: Regularized Linear Regression Cost =============
     # You should now implement the cost function for regularized linear
     # regression.
-    def test_regularized_linear_regression_cost(self):
+    def test_regularized_linear_regression_cost_and_grad(self):
         mat = scipy.io.loadmat(data_file)
 
         # m = Number of examples
@@ -68,6 +67,15 @@ class test_ex5_regularized_linear_regressionand_bias_vs_variance(unittest.TestCa
         theta = np.array([[1], [1]])
         X_padded = np.column_stack((np.ones((m, 1)), X))
         from ex5_regularized_linear_regressionand_bias_vs_variance.linearRegCostFunction import linearRegCostFunction
-        J = linearRegCostFunction(X_padded, y, theta, 1)
-        print(J)
+        J, grad = linearRegCostFunction(X_padded, y, theta, 1)
+        self.assertAlmostEqual(J, 303.993, delta=0.001)
+        print('Cost at theta = [1 ; 1]: {cost} \n'
+              '(this value should be about 303.993192)'.format(cost=J))
 
+        # =========== Part 3: Regularized Linear Regression Gradient =============
+        # You should now implement the gradient for regularized linear
+        # regression.
+        self.assertAlmostEqual(grad[0], -15.303016, delta=0.0001)
+        self.assertAlmostEqual(grad[1], 598.250744, delta=0.0001)
+        print('Gradient at theta = [1 ; 1]:  [{grad_0}; {grad_1}] \n'
+              '(this value should be about [-15.303016; 598.250744])\n'.format(grad_0=grad[0], grad_1=grad[1]))
