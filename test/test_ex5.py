@@ -58,7 +58,7 @@ class test_ex5_regularized_linear_regressionand_bias_vs_variance(unittest.TestCa
     # =========== Part 2: Regularized Linear Regression Cost =============
     # You should now implement the cost function for regularized linear
     # regression.
-    def (self):
+    def test_regularized_linear_regression_cost(self):
         mat = scipy.io.loadmat(data_file)
 
         # m = Number of examples
