@@ -25,11 +25,11 @@ def trainLinearReg(X, y, _lambda):
         _, _grad = linearRegCostFunction(_X, _y, theta, __lambda)
         return _grad
 
-    results = fmin_cg(costFunc,
-                      fprime=grad,
-                      x0=initial_theta,
-                      args=(X, y, _lambda),
-                      maxiter=400,
-                      disp=True,
-                      full_output=True)
-    return results
+    result = fmin_cg(costFunc,
+                     fprime=grad,
+                     x0=initial_theta,
+                     args=(X, y, _lambda),
+                     maxiter=400,
+                     disp=True,
+                     full_output=True)
+    return result[1], result[0]
