@@ -49,7 +49,6 @@ class test_ex5_regularized_linear_regressionand_bias_vs_variance(unittest.TestCa
         plt.xlabel('Change in water level (x)')
         plt.ylabel('Water flowing out of the dam (y)')
         plt.scatter(self.X, self.y, marker='o', color='k', s=10)
-        plt.legend(loc='lower right')
         plt.show()
 
         # Plot training data
@@ -97,6 +96,5 @@ class test_ex5_regularized_linear_regressionand_bias_vs_variance(unittest.TestCa
         plt.xlabel('Change in water level (x)')
         plt.ylabel('Water flowing out of the dam (y)')
         plt.scatter(self.X, self.y, marker='x', c='r', s=30, linewidth=2)
-        plt.legend(loc='lower right')
         plt.plot(self.X, ret, linewidth=2)
         plt.show()
