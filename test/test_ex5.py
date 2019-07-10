@@ -40,6 +40,7 @@ class test_ex5_regularized_linear_regressionand_bias_vs_variance(unittest.TestCa
 
         cls.X = mat["X"]
         cls.y = mat["y"]
+        cls.m = np.shape(cls.X)[0]
 
     def test_load_and_visualzing_data(self):
         import matplotlib.pyplot as plt
@@ -59,9 +60,8 @@ class test_ex5_regularized_linear_regressionand_bias_vs_variance(unittest.TestCa
     # regression.
     def test_regularized_linear_regression_cost_and_grad(self):
         # m = Number of examples
-        m = np.shape(self.X)[0]
-        theta = np.array([[1],[1]])
-        X_padded = np.column_stack((np.ones((m, 1)), self.X))
+        theta = np.array([[1], [1]])
+        X_padded = np.column_stack((np.ones((self.m, 1)), self.X))
         from ex5_regularized_linear_regressionand_bias_vs_variance.linearRegCostFunction import linearRegCostFunction
         J, grad = linearRegCostFunction(X_padded, self.y, theta, 1)
         self.assertAlmostEqual(J, 303.993, delta=0.001)
@@ -84,10 +84,19 @@ class test_ex5_regularized_linear_regressionand_bias_vs_variance(unittest.TestCa
     # Write Up Note: The data is non - linear, so this will not give a great
     # fit.
     #
-
     def test_train_linear_reg(self):
         from ex5_regularized_linear_regressionand_bias_vs_variance.trainLinearReg import trainLinearReg
         # Train linear regression with lambda = 0
         _lambda = 0
-        ret = trainLinearReg(self.X, self.y, _lambda)
-        print(ret)
+        x_with_bias = np.column_stack((np.ones(self.m), self.X))
+        cost, theta = trainLinearReg(x_with_bias, self.y, _lambda)
+        ret = x_with_bias.dot(theta)
+
+        import matplotlib.pyplot as plt
+        plt.figure(1)
+        plt.xlabel('Change in water level (x)')
+        plt.ylabel('Water flowing out of the dam (y)')
+        plt.scatter(self.X, self.y, marker='x', c='r', s=30, linewidth=2)
+        plt.legend(loc='lower right')
+        plt.plot(self.X, ret, linewidth=2)
+        plt.show()
