@@ -40,6 +40,10 @@ class test_ex5_regularized_linear_regressionand_bias_vs_variance(unittest.TestCa
 
         cls.X = mat["X"]
         cls.y = mat["y"]
+        cls.Xval = mat["Xval"]
+        cls.yval = mat["yval"]
+        cls.Xtest = mat["Xtest"]
+        cls.ytest = mat["ytest"]
         cls.m = np.shape(cls.X)[0]
 
     def test_load_and_visualzing_data(self):
@@ -98,3 +102,34 @@ class test_ex5_regularized_linear_regressionand_bias_vs_variance(unittest.TestCa
         plt.scatter(self.X, self.y, marker='x', c='r', s=30, linewidth=2)
         plt.plot(self.X, ret, linewidth=2)
         plt.show()
+
+    #  =========== Part 5: Learning Curve for Linear Regression =============
+    #  Next, you should implement the learningCurve function.
+    #
+    #  Write Up Note: Since the model is underfitting the data, we expect to
+    #                 see a graph with "high bias" -- slide 8 in ML-advice.pdf
+    #
+    def test_learning_curve_for_linear_regression(self):
+        _lambda = 0
+        from ex5_regularized_linear_regressionand_bias_vs_variance.learningCurve import learningCurve
+        x_with_bias = np.column_stack((np.ones(self.m), self.X))
+        x_val_with_bias = np.column_stack((np.ones(np.shape(self.Xval)[0]), self.Xval))
+        print(x_with_bias)
+        print(x_val_with_bias)
+        error_train, error_val = learningCurve(x_with_bias, self.y, x_val_with_bias, self.yval, 0)
+
+        import matplotlib.pyplot as plt
+        temp = np.array([x for x in range(1, self.m + 1)])
+        print(temp)
+        print(error_train)
+        print(error_val)
+        # plt.plot(1:m, error_train, 1:m, error_val);
+        plt.title('Learning curve for linear regression')
+        plt.legend('Train', 'Cross Validation')
+        plt.xlabel('Number of training examples')
+        plt.ylabel('Error')
+        plt.plot(temp, np.array(error_train), color='b', linewidth=2, label='Train')
+        plt.plot(temp, np.array(error_val), color='y', linewidth=2, label='Cross Validation')
+        plt.show(block=True)
+
+        # axis([0 13 0 150])
