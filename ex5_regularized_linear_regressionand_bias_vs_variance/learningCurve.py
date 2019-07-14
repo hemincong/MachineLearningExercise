@@ -64,6 +64,6 @@ def learningCurve(X, y, Xval, yval, _lambda):
     for i in range(m):
         _, theta = trainLinearReg(X[:i + 1, :], y[:i + 1], _lambda)
         error_train.append(linearRegCostFunction(X[:i + 1, :], y[:i + 1], theta, 0)[0])
-        error_val.append(linearRegCostFunction(Xval[:i+1, :], yval[:i+1], theta, 0)[0])
+        error_val.append(linearRegCostFunction(Xval, yval, theta, 0)[0])
 
     return error_train, error_val
