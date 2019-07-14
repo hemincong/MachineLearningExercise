@@ -132,4 +132,16 @@ class test_ex5_regularized_linear_regressionand_bias_vs_variance(unittest.TestCa
         plt.legend()
         plt.show(block=True)
 
-        # axis([0 13 0 150])
+    # =========== Part 6: Feature Mapping for Polynomial Regression =============
+    # One solution to this is to use polynomial regression.You should now
+    # complete polyFeatures to map each example into its powers
+    #
+    def test_feature_mapping_for_polynomial_regression(self):
+        p = 8
+        # Map X onto Polynomial Features and Normalize
+        from ex5_regularized_linear_regressionand_bias_vs_variance.polyFeatures import polyFeatures
+        X_poly = polyFeatures(self.X, p)
+        print(X_poly)
+
+
+
