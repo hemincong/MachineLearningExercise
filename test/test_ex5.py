@@ -125,11 +125,11 @@ class test_ex5_regularized_linear_regressionand_bias_vs_variance(unittest.TestCa
         print(error_val)
         # plt.plot(1:m, error_train, 1:m, error_val);
         plt.title('Learning curve for linear regression')
-        plt.legend('Train', 'Cross Validation')
         plt.xlabel('Number of training examples')
         plt.ylabel('Error')
         plt.plot(temp, np.array(error_train), color='b', linewidth=2, label='Train')
         plt.plot(temp, np.array(error_val), color='y', linewidth=2, label='Cross Validation')
+        plt.legend()
         plt.show(block=True)
 
         # axis([0 13 0 150])
