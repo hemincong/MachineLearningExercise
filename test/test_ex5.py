@@ -141,7 +141,9 @@ class test_ex5_regularized_linear_regressionand_bias_vs_variance(unittest.TestCa
         # Map X onto Polynomial Features and Normalize
         from ex5_regularized_linear_regressionand_bias_vs_variance.polyFeatures import polyFeatures
         X_poly = polyFeatures(self.X, p)
-        print(X_poly)
+        X_poly_m, X_poly_n = np.shape(X_poly)
+        self.assertEqual(X_poly_m, self.m)
+        self.assertEqual(X_poly_n, p)
 
 
 

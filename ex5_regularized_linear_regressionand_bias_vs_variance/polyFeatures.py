@@ -22,6 +22,6 @@ def polyFeatures(X, p):
         return None
 
     for i in range(1, p):
-        np.column_stack((X_poly, np.power(X_poly, i + 1)))
+        X_poly = np.column_stack((X_poly, np.power(X, i + 1)))
 
     return X_poly
