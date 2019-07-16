@@ -114,15 +114,17 @@ class test_ex5_regularized_linear_regressionand_bias_vs_variance(unittest.TestCa
         from ex5_regularized_linear_regressionand_bias_vs_variance.learningCurve import learningCurve
         x_with_bias = np.column_stack((np.ones(self.m), self.X))
         x_val_with_bias = np.column_stack((np.ones(np.shape(self.Xval)[0]), self.Xval))
-        print(x_with_bias)
-        print(x_val_with_bias)
         error_train, error_val = learningCurve(x_with_bias, self.y, x_val_with_bias, self.yval, 0)
+
+        print('# Training Examples\tTrain Error\tCross Validation Error')
+
+        for i in range(self.m):
+            print('  \t{index}\t\t{error_train}\t{error_val}\n'.format(index=i,
+                                                                       error_train=error_train[i],
+                                                                       error_val=error_val[i]))
 
         import matplotlib.pyplot as plt
         temp = np.array([x for x in range(1, self.m + 1)])
-        print(temp)
-        print(error_train)
-        print(error_val)
         # plt.plot(1:m, error_train, 1:m, error_val);
         plt.title('Learning curve for linear regression')
         plt.xlabel('Number of training examples')
@@ -145,5 +147,8 @@ class test_ex5_regularized_linear_regressionand_bias_vs_variance(unittest.TestCa
         self.assertEqual(X_poly_m, self.m)
         self.assertEqual(X_poly_n, p)
 
-
-
+        from ex5_regularized_linear_regressionand_bias_vs_variance.featureNormalize import featureNormalize
+        X_norm, mu, sigma = featureNormalize(X_poly)
+        print(X_norm)
+        print(mu)
+        print(sigma)
