@@ -149,6 +149,17 @@ class test_ex5_regularized_linear_regressionand_bias_vs_variance(unittest.TestCa
 
         from ex5_regularized_linear_regressionand_bias_vs_variance.featureNormalize import featureNormalize
         X_norm, mu, sigma = featureNormalize(X_poly)
-        print(X_norm)
-        print(mu)
-        print(sigma)
+        X_poly = np.column_stack((np.ones((self.m, 1)), X_poly))
+
+        X_poly_test = polyFeatures(self.Xtest, p)
+        X_poly_test_m, X_poly_test_n = np.shape(X_poly_test)
+        self.assertEqual(X_poly_test_m, np.shape(self.Xtest)[0])
+        self.assertEqual(X_poly_test_n, p)
+
+        X_poly_val = polyFeatures(self.Xval, p)
+        X_poly_val_m, X_poly_val_n = np.shape(X_poly_val)
+        self.assertEqual(X_poly_val_m, np.shape(self.Xval)[0])
+        self.assertEqual(X_poly_val_n, p)
+
+        print('Normalized Training Example 1:\n'
+              '  {X_poly}  '.format(X_poly=X_poly))
