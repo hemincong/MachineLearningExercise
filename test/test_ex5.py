@@ -148,18 +148,50 @@ class test_ex5_regularized_linear_regressionand_bias_vs_variance(unittest.TestCa
         self.assertEqual(X_poly_n, p)
 
         from ex5_regularized_linear_regressionand_bias_vs_variance.featureNormalize import featureNormalize
-        X_norm, mu, sigma = featureNormalize(X_poly)
+        X_poly, mu, sigma = featureNormalize(X_poly)
         X_poly = np.column_stack((np.ones((self.m, 1)), X_poly))
 
         X_poly_test = polyFeatures(self.Xtest, p)
         X_poly_test_m, X_poly_test_n = np.shape(X_poly_test)
         self.assertEqual(X_poly_test_m, np.shape(self.Xtest)[0])
         self.assertEqual(X_poly_test_n, p)
+        X_poly_test = X_poly_test - mu
+        X_poly_test = X_poly_test / sigma
+        X_poly_test = np.column_stack((np.ones((X_poly_test.shape[0], 1)), X_poly_test))
 
         X_poly_val = polyFeatures(self.Xval, p)
         X_poly_val_m, X_poly_val_n = np.shape(X_poly_val)
         self.assertEqual(X_poly_val_m, np.shape(self.Xval)[0])
         self.assertEqual(X_poly_val_n, p)
+        X_poly_val = X_poly_val - mu
+        X_poly_val = X_poly_val / sigma
+        X_poly_val = np.column_stack((np.ones((X_poly_val.shape[0], 1)), X_poly_val))
 
         print('Normalized Training Example 1:\n'
               '  {X_poly}  '.format(X_poly=X_poly))
+
+        # =========== Part 7: Learning Curve for Polynomial Regression =============
+        # Now, you will get to experiment with polynomial regression with multiple
+        # values of lambda .The code below runs polynomial regression with
+        # lambda = 0. You should try running the code with different values of
+        # lambda to see how the fit and learning curve change.
+        #
+        _lambda = 0
+        from ex5_regularized_linear_regressionand_bias_vs_variance.trainLinearReg import trainLinearReg
+        cost, theta = trainLinearReg(X_poly, self.y, _lambda)
+        self.assertIsNotNone(cost)
+        self.assertIsNotNone(theta)
+
+        import matplotlib.pyplot as plt
+        plt.figure(1)
+        plt.scatter(self.X, self.y, marker='x', c='r', s=30, linewidth=2)
+        plt.xlim([-80, 80])
+        plt.ylim([-20, 60])
+        plt.xlabel('Change in water level(x)')
+        plt.ylabel('Water flowing out of the dam(y)')
+        plt.title('Polynomial Regression Fit (lambda = {:f})'.format(_lambda))
+
+        # plt.plot(self.X, self.y, 'rx', markersize=10, linewidth=1.5)
+        from ex5_regularized_linear_regressionand_bias_vs_variance.plotFit import plotFit
+        plotFit(min(self.X), max(self.X), mu, sigma, theta, p)
+        plt.show(block=False)
