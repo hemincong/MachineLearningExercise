@@ -195,3 +195,15 @@ class test_ex5_regularized_linear_regressionand_bias_vs_variance(unittest.TestCa
         from ex5_regularized_linear_regressionand_bias_vs_variance.plotFit import plotFit
         plotFit(min(self.X), max(self.X), mu, sigma, theta, p)
         plt.show(block=False)
+
+        plt.figure(2)
+        from ex5_regularized_linear_regressionand_bias_vs_variance.learningCurve import learningCurve
+        error_train, error_val = learningCurve(X_poly, self.y, X_poly_val, self.yval, 0)
+        p1, p2 = plt.plot(range(1, self.m + 1), error_train, range(1, self.m + 1), error_val)
+        plt.legend((p1, p2), ('Train', 'Cross Validation'))
+        plt.show(block=False)
+
+        print('Polynomial Regression (lambda =%{_lambda})'.format(_lambda=_lambda))
+        print('# Training Examples\tTrain Error\tCross Validation Error')
+        for i in range(0, self.m):
+            print('\t{i}\t\t{error_train}\t{error_val}'.format(i=i, error_train=error_train[i], error_val=error_val[i]))
