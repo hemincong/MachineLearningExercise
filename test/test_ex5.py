@@ -207,3 +207,27 @@ class test_ex5_regularized_linear_regressionand_bias_vs_variance(unittest.TestCa
         print('# Training Examples\tTrain Error\tCross Validation Error')
         for i in range(0, self.m):
             print('\t{i}\t\t{error_train}\t{error_val}'.format(i=i, error_train=error_train[i], error_val=error_val[i]))
+
+        # =========== Part 8: Validation for Selecting Lambda =============
+        #  You will now implement validationCurve to test various values of
+        #  lambda on a validation set. You will then use this to select the
+        #  "best" lambda value.
+        #
+
+        from ex5_regularized_linear_regressionand_bias_vs_variance.validationCurve import validationCurve
+        lambda_vec, error_train, error_val = validationCurve(X_poly, self.y, X_poly_val, self.yval)
+        self.assertEqual(len(error_train), len(lambda_vec))
+        self.assertEqual(len(error_val), len(lambda_vec))
+
+        plt.close('all')
+        p1, p2, = plt.plot(lambda_vec, error_train, lambda_vec, error_val)
+        plt.legend((p1, p2), ('Train', 'Cross Validation'))
+        plt.xlabel('lambda')
+        plt.ylabel('Error')
+        plt.show(block=False)
+
+        print('lambda\t\tTrain Error\tValidation Error')
+        for i in range(len(lambda_vec)):
+            print(
+                '{lambda_vec}\t{error_train}\t{error_val}'.format(lambda_vec=lambda_vec[i], error_train=error_train[i],
+                                                                  error_val=error_val[i]))
