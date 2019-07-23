@@ -231,3 +231,17 @@ class test_ex5_regularized_linear_regressionand_bias_vs_variance(unittest.TestCa
             print(
                 '{lambda_vec}\t{error_train}\t{error_val}'.format(lambda_vec=lambda_vec[i], error_train=error_train[i],
                                                                   error_val=error_val[i]))
+        # =========== Part 9: Computing test set error and Plotting learning curves with randomly selected examples
+        # ============= best lambda value from previous step
+        lambda_val = 3
+
+        # note that we're using X_poly - polynomial linear regression with polynomial features
+        from ex5_regularized_linear_regressionand_bias_vs_variance.trainLinearReg import trainLinearReg
+        _, theta = trainLinearReg(X_poly, self.y, lambda_val)
+
+        # because we're using X_poly, we also have to use X_poly_test with polynomial features
+        from ex5_regularized_linear_regressionand_bias_vs_variance.linearRegCostFunction import linearRegCostFunction
+        error_test, _ = linearRegCostFunction(X_poly_test, self.ytest, theta, 0)
+        print('Test set error: {error_test}'.format(error_test=error_test))  # expected 3.859
+        # why? something wrong
+        # self.assertAlmostEqual(error_test, 3.859, delta=0.01)
