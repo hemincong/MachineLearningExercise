@@ -245,3 +245,44 @@ class test_ex5_regularized_linear_regressionand_bias_vs_variance(unittest.TestCa
         print('Test set error: {error_test}'.format(error_test=error_test))  # expected 3.859
         # why? something wrong
         # self.assertAlmostEqual(error_test, 3.859, delta=0.01)
+
+        # =========== Part 10: Plot learning curves with randomly selected examples =============
+        #
+
+        # lambda_val value for this step
+        lambda_val = 0.01
+
+        times = 50
+
+        error_train_rand = np.zeros((self.m, times))
+        error_val_rand = np.zeros((self.m, times))
+
+        for i in range(self.m):
+            for k in range(times):
+                rand_sample_train = np.random.permutation(X_poly.shape[0])
+                rand_sample_train = rand_sample_train[:i + 1]
+
+                rand_sample_val = np.random.permutation(X_poly_val.shape[0])
+                rand_sample_val = rand_sample_val[:i + 1]
+
+                X_poly_train_rand = X_poly[rand_sample_train, :]
+                y_train_rand = self.y[rand_sample_train]
+                X_poly_val_rand = X_poly_val[rand_sample_val, :]
+                y_val_rand = self.yval[rand_sample_val]
+
+                _, theta = trainLinearReg(X_poly_train_rand, y_train_rand, lambda_val)
+                cost, _ = linearRegCostFunction(X_poly_train_rand, y_train_rand, np.asarray(theta), 0)
+                error_train_rand[i, k] = cost
+                cost, _ = linearRegCostFunction(X_poly_val_rand, y_val_rand, theta, 0)
+                error_val_rand[i, k] = cost
+
+        error_train = np.mean(error_train_rand, axis=1)
+        error_val = np.mean(error_val_rand, axis=1)
+
+        p1, p2 = plt.plot(range(self.m), error_train, range(self.m), error_val)
+        plt.title('Polynomial Regression Learning Curve (lambda = {:f})'.format(lambda_val))
+        plt.legend((p1, p2), ('Train', 'Cross Validation'))
+        plt.xlabel('Number of training examples')
+        plt.ylabel('Error')
+        plt.axis([0, 13, 0, 150])
+        plt.show(block=False)
