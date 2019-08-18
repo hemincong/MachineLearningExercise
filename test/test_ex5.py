@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
 import unittest
 
@@ -23,11 +24,6 @@ import scipy.io
 #
 class test_ex5_regularized_linear_regressionand_bias_vs_variance(unittest.TestCase):
 
-    # =========== Part 1: Loading and Visualizing Data =============
-    # We start the exercise by first loading and visualizing the dataset.
-    # The following code will load the dataset into your environment and plot
-    # the data.
-    #
     @classmethod
     def setUp(cls):
         # Load Training Data
@@ -46,6 +42,11 @@ class test_ex5_regularized_linear_regressionand_bias_vs_variance(unittest.TestCa
         cls.ytest = mat["ytest"]
         cls.m = np.shape(cls.X)[0]
 
+    # =========== Part 1: Loading and Visualizing Data =============
+    # We start the exercise by first loading and visualizing the dataset.
+    # The following code will load the dataset into your environment and plot
+    # the data.
+    #
     def test_load_and_visualzing_data(self):
         import matplotlib.pyplot as plt
         # print("point_end_y: {max_y}".format(max_y = point_end_y))
