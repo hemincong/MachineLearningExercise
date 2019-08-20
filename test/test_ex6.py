@@ -16,14 +16,20 @@ class test_ex5_svm(unittest.TestCase):
         # Load Training Data
         print('Loading and Visualizing Data ...')
         data_file = "resource/ex6data1.mat"
+        data_file_2 = "resource/ex6data2.mat"
 
         # Load
         # You will have X, y, Xval, yval, Xtest, ytest in your environment
         mat = scipy.io.loadmat(data_file)
+        mat_2 = scipy.io.loadmat(data_file_2)
 
         cls.X = mat["X"]
         cls.y = mat["y"]
         cls.m = np.shape(cls.X)[0]
+
+        cls.X_2 = mat_2["X"]
+        cls.y_2 = mat_2["y"]
+        cls.m_2 = np.shape(cls.X_2)[0]
 
     # =============== Part 1: Loading and Visualizing Data ================
     #  We start the exercise by first loading and visualizing the dataset.
@@ -83,3 +89,27 @@ class test_ex5_svm(unittest.TestCase):
         print("this value should be about 0.324652")
 
         self.assertAlmostEqual(sim, 0.324652, delta=0.00001)
+
+    # =============== Part 4: Visualizing Dataset 2 ================
+    #  The following code will load the next dataset into your environment and
+    #  plot the data.
+    #
+    def test_load_and_visualzing_data_2(self):
+        print('Loading and Visualizing Data ...')
+
+        # Load from ex6data2:
+        # You will have X, y in your environment
+
+        y = self.y_2.flatten()
+        pos = y == 1
+        neg = y == 0
+
+        import matplotlib.pyplot as plt
+        # Plot training data
+        plt.close()
+        plt.figure(1)
+        plt.xlabel('Change in water level (x)')
+        plt.ylabel('Water flowing out of the dam (y)')
+        plt.plot(self.X_2[:, 0][pos], self.X_2[:, 1][pos], 'k+', markersize=10)
+        plt.plot(self.X_2[:, 0][neg], self.X_2[:, 1][neg], 'yo', markersize=10)
+        plt.show(block=False)
