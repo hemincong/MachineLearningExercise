@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+
 def gaussianKernel(x1, x2, sigma=0.1):
     # RBFKERNEL returns a radial basis function kernel between x1 and x2
     #   sim = gaussianKernel(x1, x2) returns a gaussian kernel between x1 and x2
