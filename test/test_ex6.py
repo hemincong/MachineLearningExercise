@@ -17,11 +17,13 @@ class test_ex5_svm(unittest.TestCase):
         print('Loading and Visualizing Data ...')
         data_file = "resource/ex6data1.mat"
         data_file_2 = "resource/ex6data2.mat"
+        data_file_3 = "resource/ex6data3.mat"
 
         # Load
         # You will have X, y, Xval, yval, Xtest, ytest in your environment
         mat = scipy.io.loadmat(data_file)
         mat_2 = scipy.io.loadmat(data_file_2)
+        mat_3 = scipy.io.loadmat(data_file_3)
 
         cls.X = mat["X"]
         cls.y = mat["y"]
@@ -30,6 +32,10 @@ class test_ex5_svm(unittest.TestCase):
         cls.X_2 = mat_2["X"]
         cls.y_2 = mat_2["y"]
         cls.m_2 = np.shape(cls.X_2)[0]
+
+        cls.X_3 = mat_3["X"]
+        cls.y_3 = mat_3["y"]
+        cls.m_3 = np.shape(cls.X_3)[0]
 
     # =============== Part 1: Loading and Visualizing Data ================
     #  We start the exercise by first loading and visualizing the dataset.
@@ -136,3 +142,15 @@ class test_ex5_svm(unittest.TestCase):
         from ex6_SVM.visualizeBoundary import visualizeBoundary
         visualizeBoundary(self.X_2, self.y_2, model)
 
+    # =============== Part 6: Visualizing Dataset 3 ================
+    #  The following code will load the next dataset into your environment and
+    #  plot the data.
+    #
+    def test_load_and_visualizing_data_3(self):
+        # Load from ex6data2:
+        # You will have X, y in your environment
+
+        import matplotlib.pyplot as plt
+        # Plot training data
+        from ex6_SVM.plotData import plotData
+        plotData(self.X_3, self.y_3)
