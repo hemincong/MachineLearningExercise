@@ -94,7 +94,7 @@ class test_ex5_svm(unittest.TestCase):
     #  The following code will load the next dataset into your environment and
     #  plot the data.
     #
-    def test_load_and_visualzing_data_2(self):
+    def test_load_and_visualizing_data_2(self):
         print('Loading and Visualizing Data ...')
 
         # Load from ex6data2:
@@ -113,3 +113,26 @@ class test_ex5_svm(unittest.TestCase):
         plt.plot(self.X_2[:, 0][pos], self.X_2[:, 1][pos], 'k+', markersize=10)
         plt.plot(self.X_2[:, 0][neg], self.X_2[:, 1][neg], 'yo', markersize=10)
         plt.show(block=False)
+
+    # ========== Part 5: Training SVM with RBF Kernel (Dataset 2) ==========
+    #  After you have implemented the kernel, we can now use it to train the
+    #  SVM classifier.
+    #
+    def test_training_svm_with_rbf_kernel(self):
+        # Load from ex6data2:
+        # You will have X, y in your environment
+
+        # SVM Parameters
+        C = 1
+        sigma = 0.1
+
+        # We set the tolerance and max_passes lower here so that the code will run
+        # faster.However, in practice, you will want to run the training to
+        # convergence.
+        from ex6_SVM.svmTrain import svmTrain
+        model = svmTrain(self.X_2, self.y_2, C, "gaussian")
+        import matplotlib.pyplot as plt
+        plt.close()
+        from ex6_SVM.visualizeBoundary import visualizeBoundary
+        visualizeBoundary(self.X_2, self.y_2, model)
+

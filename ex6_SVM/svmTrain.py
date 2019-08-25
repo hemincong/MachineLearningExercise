@@ -6,7 +6,7 @@ from sklearn import svm
 from ex6_SVM.gaussianKernelGramMatrix import gaussianKernelGramMatrix
 
 
-def svmTrain(X, y, C, kernelFunction, tol, max_passes):
+def svmTrain(X, y, C, kernelFunction, tol=1e-3, max_passes=-1, sigma=0.1):
     y = y.flatten()
     # SVMTRAIN Trains an SVM classifier using a simplified version of the SMO
     # algorithm.
@@ -29,7 +29,7 @@ def svmTrain(X, y, C, kernelFunction, tol, max_passes):
     #
     if kernelFunction == "gaussian":
         clf = svm.SVC(C=C, kernel="precomputed", tol=tol, max_iter=max_passes, verbose=2)
-        return clf.fit(gaussianKernelGramMatrix(X, X, sigma=0.1), y)
+        return clf.fit(gaussianKernelGramMatrix(X, X, sigma=sigma), y)
     else:
         clf = svm.SVC(C=C, kernel=kernelFunction, tol=tol, max_iter=max_passes, verbose=2)
         return clf.fit(X, y)
