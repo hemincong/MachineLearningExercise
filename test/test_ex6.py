@@ -150,7 +150,6 @@ class test_ex5_svm(unittest.TestCase):
         # Load from ex6data2:
         # You will have X, y in your environment
 
-        import matplotlib.pyplot as plt
         # Plot training data
         from ex6_SVM.plotData import plotData
         plotData(self.X_3, self.y_3)
