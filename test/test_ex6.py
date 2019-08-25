@@ -154,3 +154,26 @@ class test_ex5_svm(unittest.TestCase):
         # Plot training data
         from ex6_SVM.plotData import plotData
         plotData(self.X_3, self.y_3)
+
+    # ========== Part 7: Training SVM with RBF Kernel (Dataset 3) ==========
+
+    # This is a different dataset that you can use to experiment with.Try
+    # different values of C and sigma here.
+    #
+    def test_training_svm_with_rbf_kernel_data_3(self):
+        # Load from ex6data2:
+        # You will have X, y in your environment
+
+        # SVM Parameters
+        C = 1
+        sigma = 0.1
+
+        # We set the tolerance and max_passes lower here so that the code will run
+        # faster.However, in practice, you will want to run the training to
+        # convergence.
+        from ex6_SVM.svmTrain import svmTrain
+        model = svmTrain(self.X_3, self.y_3, C, "gaussian")
+        import matplotlib.pyplot as plt
+        plt.close()
+        from ex6_SVM.visualizeBoundary import visualizeBoundary
+        visualizeBoundary(self.X_3, self.y_3, model)
