@@ -9,7 +9,7 @@ import scipy.io
 
 #  Exercise 6 | Support Vector Machines
 #
-class test_ex5_svm(unittest.TestCase):
+class test_ex6_svm(unittest.TestCase):
 
     @classmethod
     def setUp(cls):
