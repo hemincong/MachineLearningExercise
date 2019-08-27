@@ -37,7 +37,24 @@ class test_ex6_spam(unittest.TestCase):
     # implement the preprocessing steps for each email.You should
     # complete the code in processEmail.m to produce a word indices vector
     # for a given email.
-    def test_load_and_visualzing_data(self):
+    def test_email_preprocessing(self):
+        # Extract Features
+
+        with open('resource/emailSample1.txt', 'r') as emailSample:
+            file_contents = emailSample.read()
+            from ex6_SVM.processEmail import processEmail
+            word_indices = processEmail(file_contents, self.vocabList)
+
+            # Print Stats
+            print('Word Indices:')
+            print('{word_indices}'.format(word_indices=word_indices))
+            self.assertGreater(len(word_indices), 0)
+
+    # ==================== Part 2 : Feature Extraction====================
+    # Now, you will convert each email into a vector of features in R ^ n.
+    # You should complete the code in emailFeatures.m to produce a feature
+    # vector for a given email.
+    def test_feature_extraction(self):
         # Extract Features
 
         with open('resource/emailSample1.txt', 'r') as emailSample:
@@ -47,10 +64,8 @@ class test_ex6_spam(unittest.TestCase):
             from ex6_SVM.emailFeatures import emailFeatures
             features = emailFeatures(word_indices)
 
-            # Print Stats
-            print('Word Indices:')
-            print('{word_indices}'.format(word_indices=word_indices))
             self.assertGreater(len(features), 0)
-            self.assertGreater(len(word_indices), 0)
 
-
+            # Print Stats
+            print('Length of feature vector: {num_of_features}'.format(num_of_features=len(features)))
+            print('Number of non-zero entries: {sum_of_feature}'.format(sum_of_feature=sum(features > 0)[0]))
