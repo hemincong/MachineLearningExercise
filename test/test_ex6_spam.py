@@ -3,9 +3,6 @@
 
 import unittest
 
-import numpy as np
-import scipy.io
-
 
 # Machine Learning Online Class
 #  Exercise 6 | Spam Classification with SVMs
@@ -69,3 +66,29 @@ class test_ex6_spam(unittest.TestCase):
             # Print Stats
             print('Length of feature vector: {num_of_features}'.format(num_of_features=len(features)))
             print('Number of non-zero entries: {sum_of_feature}'.format(sum_of_feature=sum(features > 0)[0]))
+
+    # =========== Part 3: Train Linear SVM for Spam Classification ========
+    #  In this section, you will train a linear classifier to determine if an
+    #  email is Spam or Not-Spam.
+
+    # Load the Spam Email dataset
+    # You will have X, y in your environment
+    def test_spam_train(self):
+        import scipy.io
+        mat = scipy.io.loadmat('resource/spamTrain.mat')
+        X = mat["X"]
+        y = mat["y"]
+
+        y = y.flatten()
+
+        print('Training Linear SVM (Spam Classification)')
+        print('(this may take 1 to 2 minutes) ...')
+
+        C = 0.1
+        from ex6_SVM.svmTrain import svmTrain
+        model = svmTrain(X, y, C, "linear")
+
+        p = model.predict(X)
+        import numpy as np
+        ret = np.mean((p == y)) * 100
+        print("Training Accuracy: {accuracy}".format(accuracy=ret))
