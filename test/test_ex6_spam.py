@@ -29,7 +29,7 @@ class test_ex6_spam(unittest.TestCase):
     @classmethod
     def setUp(cls):
         from ex6_SVM.getVocabList import getVocabList
-        vocabList = getVocabList("resource/vocab.txt")
+        cls.vocabList = getVocabList("resource/vocab.txt")
 
     # ==================== Part 1: Email Preprocessing ====================
     # To use an SVM to classify emails into Spam v.s.Non - Spam, you first need
@@ -39,8 +39,10 @@ class test_ex6_spam(unittest.TestCase):
     # for a given email.
     def test_load_and_visualzing_data(self):
         # Extract Features
-        pass
-        #file_contents = readFile('emailSample1.txt');
-        #word_indices = processEmail(file_contents);
+
+        with open('resource/emailSample1.txt', 'r') as emailSample:
+            file_contents = emailSample.read()
+            from ex6_SVM.processEmail import processEmail
+            word_indices = processEmail(file_contents, self.vocabList)
 
 
