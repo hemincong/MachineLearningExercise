@@ -92,3 +92,23 @@ class test_ex6_spam(unittest.TestCase):
         import numpy as np
         ret = np.mean((p == y)) * 100
         print("Training Accuracy: {accuracy}".format(accuracy=ret))
+        self.assertAlmostEqual(ret, 99.85, delta=0.1)
+
+        # =================== Part 4: Test Spam Classification ================
+        #  After training the classifier, we can evaluate it on a test set. We have
+        #  included a test set in spamTest.mat
+
+        # Load the test dataset
+        # You will have Xtest, ytest in your environment
+        mat = scipy.io.loadmat('resource/spamTest.mat')
+        Xtest = mat["Xtest"]
+        ytest = mat["ytest"]
+
+        ytest = ytest.flatten()
+
+        print('Evaluating the trained Linear SVM on a test set ...')
+
+        p = model.predict(Xtest)
+        ret = np.mean((p == ytest)) * 100
+        print('Test Accuracy: {accuracy}'.format(accuracy=ret))
+        self.assertAlmostEqual(ret, 98.9, delta=0.1)
