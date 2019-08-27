@@ -44,5 +44,13 @@ class test_ex6_spam(unittest.TestCase):
             file_contents = emailSample.read()
             from ex6_SVM.processEmail import processEmail
             word_indices = processEmail(file_contents, self.vocabList)
+            from ex6_SVM.emailFeatures import emailFeatures
+            features = emailFeatures(word_indices)
+
+            # Print Stats
+            print('Word Indices:')
+            print('{word_indices}'.format(word_indices=word_indices))
+            self.assertGreater(len(features), 0)
+            self.assertGreater(len(word_indices), 0)
 
 
