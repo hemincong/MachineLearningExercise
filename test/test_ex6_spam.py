@@ -3,6 +3,8 @@
 
 import unittest
 
+import scipy.io
+
 
 # Machine Learning Online Class
 #  Exercise 6 | Spam Classification with SVMs
@@ -27,6 +29,19 @@ class test_ex6_spam(unittest.TestCase):
     def setUp(cls):
         from ex6_SVM.getVocabList import getVocabList
         cls.vocabList = getVocabList("resource/vocab.txt")
+
+        mat = scipy.io.loadmat('resource/spamTrain.mat')
+        cls.X = mat["X"]
+        cls.y = mat["y"]
+
+        cls.y = cls.y.flatten()
+
+        print('Training Linear SVM (Spam Classification)')
+        print('(this may take 1 to 2 minutes) ...')
+
+        C = 0.1
+        from ex6_SVM.svmTrain import svmTrain
+        cls.model = svmTrain(cls.X, cls.y, C, "linear")
 
     # ==================== Part 1: Email Preprocessing ====================
     # To use an SVM to classify emails into Spam v.s.Non - Spam, you first need
@@ -74,23 +89,9 @@ class test_ex6_spam(unittest.TestCase):
     # Load the Spam Email dataset
     # You will have X, y in your environment
     def test_spam_train(self):
-        import scipy.io
-        mat = scipy.io.loadmat('resource/spamTrain.mat')
-        X = mat["X"]
-        y = mat["y"]
-
-        y = y.flatten()
-
-        print('Training Linear SVM (Spam Classification)')
-        print('(this may take 1 to 2 minutes) ...')
-
-        C = 0.1
-        from ex6_SVM.svmTrain import svmTrain
-        model = svmTrain(X, y, C, "linear")
-
-        p = model.predict(X)
+        p = self.model.predict(self.X)
         import numpy as np
-        ret = np.mean((p == y)) * 100
+        ret = np.mean((p == self.y)) * 100
         print("Training Accuracy: {accuracy}".format(accuracy=ret))
         self.assertAlmostEqual(ret, 99.85, delta=0.1)
 
@@ -108,7 +109,27 @@ class test_ex6_spam(unittest.TestCase):
 
         print('Evaluating the trained Linear SVM on a test set ...')
 
-        p = model.predict(Xtest)
+        p = self.model.predict(Xtest)
         ret = np.mean((p == ytest)) * 100
         print('Test Accuracy: {accuracy}'.format(accuracy=ret))
         self.assertAlmostEqual(ret, 98.9, delta=0.1)
+
+    # ================= Part 5: Top Predictors of Spam ====================
+    #  Since the model we are training is a linear SVM, we can inspect the
+    #  weights learned by the model to understand better how it is determining
+    #  whether an email is spam or not. The following code finds the words with
+    #  the highest weights in the classifier. Informally, the classifier
+    #  'thinks' that these words are the most likely indicators of spam.
+    #
+    def test_predictors_of_spam(self):
+        # Sort the weights and obtain the vocabulary list
+        w = self.model.coef_[0]
+
+        # from http://stackoverflow.com/a/16486305/583834
+        # reverse sorting by index
+        indices = w.argsort()[::-1][:15]
+        vocabList = sorted(self.vocabList.keys())
+
+        print('Top predictors of spam: ')
+        for idx in indices:
+            print(' {:s} ({:f}) '.format(vocabList[idx], float(w[idx])))
