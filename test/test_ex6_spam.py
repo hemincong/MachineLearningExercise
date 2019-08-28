@@ -39,7 +39,7 @@ class test_ex6_spam(unittest.TestCase):
         print('Training Linear SVM (Spam Classification)')
         print('(this may take 1 to 2 minutes) ...')
 
-        C = 0.1
+        C = 0.5
         from ex6_SVM.svmTrain import svmTrain
         cls.model = svmTrain(cls.X, cls.y, C, "linear")
 
@@ -146,7 +146,7 @@ class test_ex6_spam(unittest.TestCase):
     # emailSample1.txt or emailSample2.txt to see different predictions on
     # different emails types). Try your own emails as well!
     def test_try_your_own_email(self):
-        file_name_list = [('spamSample1.txt', 0), ('spamSample2.txt', 1), ('emailSample1.txt', 0), ('emailSample2.txt', 0)]
+        file_name_list = [('spamSample1.txt', 1), ('spamSample2.txt', 1), ('emailSample1.txt', 0), ('emailSample2.txt', 0)]
 
         for f, ret in file_name_list:
             with open('resource/' + f, 'r') as emailSample:
@@ -156,5 +156,6 @@ class test_ex6_spam(unittest.TestCase):
                 from ex6_SVM.emailFeatures import emailFeatures
                 x = emailFeatures(word_indices)
                 p = self.model.predict(x.flatten().reshape(1, -1))
-                print('Test Accuracy: {accuracy}'.format(accuracy=p[0]))
+                print('Processed {filename} : Spam Classification: {p}'.format(filename=f, p=p))
+                print('(1 indicates spam, 0 indicates not spam)')
                 self.assertEqual(p[0], ret)
