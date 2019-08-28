@@ -133,3 +133,28 @@ class test_ex6_spam(unittest.TestCase):
         print('Top predictors of spam: ')
         for idx in indices:
             print(' {:s} ({:f}) '.format(vocabList[idx], float(w[idx])))
+
+    # =================== Part 6: Try Your Own Emails =====================
+    #  Now that you've trained the spam classifier, you can use it on your own
+    #  emails! In the starter code, we have included spamSample1.txt,
+    #  spamSample2.txt, emailSample1.txt and emailSample2.txt as examples.
+    #  The following code reads in one of these emails and then uses your
+    #  learned SVM classifier to determine whether the email is Spam or
+    #  Not Spam
+
+    # Set the file to be read in (change this to spamSample2.txt,
+    # emailSample1.txt or emailSample2.txt to see different predictions on
+    # different emails types). Try your own emails as well!
+    def test_try_your_own_email(self):
+        file_name_list = [('spamSample1.txt', 0), ('spamSample2.txt', 1), ('emailSample1.txt', 0), ('emailSample2.txt', 0)]
+
+        for f, ret in file_name_list:
+            with open('resource/' + f, 'r') as emailSample:
+                file_contents = emailSample.read()
+                from ex6_SVM.processEmail import processEmail
+                word_indices = processEmail(file_contents, self.vocabList)
+                from ex6_SVM.emailFeatures import emailFeatures
+                x = emailFeatures(word_indices)
+                p = self.model.predict(x.flatten().reshape(1, -1))
+                print('Test Accuracy: {accuracy}'.format(accuracy=p[0]))
+                self.assertEqual(p[0], ret)
