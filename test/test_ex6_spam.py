@@ -146,7 +146,12 @@ class test_ex6_spam(unittest.TestCase):
     # emailSample1.txt or emailSample2.txt to see different predictions on
     # different emails types). Try your own emails as well!
     def test_try_your_own_email(self):
-        file_name_list = [('spamSample1.txt', 1), ('spamSample2.txt', 1), ('emailSample1.txt', 0), ('emailSample2.txt', 0)]
+        file_name_list = [
+            ('spamSample1.txt', 1),
+            ('spamSample2.txt', 1),
+            ('emailSample1.txt', 0),
+            ('emailSample2.txt', 0)
+        ]
 
         for f, ret in file_name_list:
             with open('resource/' + f, 'r') as emailSample:
