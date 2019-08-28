@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from nltk.stem import PorterStemmer
 
 
 def processEmail(email_contents, vocabList):
@@ -51,7 +50,6 @@ def processEmail(email_contents, vocabList):
     # ========================== Tokenize Email ===========================
 
     # Output the email to screen as well
-    print('\n==== Processed Email ====\n\n')
 
     # Process file
 
@@ -59,18 +57,20 @@ def processEmail(email_contents, vocabList):
 
     # Split and also get rid of any punctuation
     # regex may need further debugging...
-    email_contents = re.split(r'[@$/#.-:&\*\+=\[\]?!(){},\'\'\">_<;%\s\n\r\t]+', email_contents)
+    import nltk
+    stemmer = nltk.stem.porter.PorterStemmer()
+    tokens = re.split('[ ' + re.escape("@$/#.-:&*+=[]?!(){},'\">_<;%") + ']', email_contents)
 
-    for token in email_contents:
+    for token in tokens:
 
         # Remove any non alphanumeric characters
         token = re.sub('[^a-zA-Z0-9]', '', token)
 
         # Stem the word
-        token = PorterStemmer().stem(token.strip())
+        token = stemmer.stem(token.strip())
 
         # Skip the word if it is too short
-        if len(token) < 1:
+        if len(token) == 0:
             continue
 
         # Look up the word in the dictionary and add to word_indices if
