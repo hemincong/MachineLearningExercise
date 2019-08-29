@@ -11,7 +11,13 @@ def visualizeBoundary(X, y, model, varargin=0):
     #   boundary learned by the SVM and overlays the data on it
 
     # Plot the training data on top of the boundary
-    pd.plotData(X, y)
+    y = y.flatten()
+    pos = y == 1
+    neg = y == 0
+
+    # Plot Examples
+    plt.plot(X[:, 0][pos], X[:, 1][pos], "k+", markersize=10)
+    plt.plot(X[:, 0][neg], X[:, 1][neg], "yo", markersize=10)
 
     # Make classification predictions over a grid of values
     x1plot = np.linspace(X[:, 0].min(), X[:, 0].max(), 100).T

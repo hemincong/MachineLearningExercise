@@ -35,6 +35,8 @@ class test_ex6_svm(unittest.TestCase):
 
         cls.X_3 = mat_3["X"]
         cls.y_3 = mat_3["y"]
+        cls.Xval_3 = mat_3["Xval"]
+        cls.yval_3 = mat_3["yval"]
         cls.m_3 = np.shape(cls.X_3)[0]
 
     # =============== Part 1: Loading and Visualizing Data ================
@@ -136,7 +138,7 @@ class test_ex6_svm(unittest.TestCase):
         # faster.However, in practice, you will want to run the training to
         # convergence.
         from ex6_SVM.svmTrain import svmTrain
-        model = svmTrain(self.X_2, self.y_2, C, "gaussian")
+        model = svmTrain(self.X_2, self.y_2, C, "gaussian", sigma=sigma)
         import matplotlib.pyplot as plt
         plt.close()
         from ex6_SVM.visualizeBoundary import visualizeBoundary
@@ -163,16 +165,15 @@ class test_ex6_svm(unittest.TestCase):
         # Load from ex6data2:
         # You will have X, y in your environment
 
-        # SVM Parameters
-        C = 1
-        sigma = 0.1
+        # Try different SVM Parameters here
+        from ex6_SVM.dataset3Params import dataset3Params
+        C, sigma = dataset3Params(self.X_3, self.y_3, self.Xval_3, self.yval_3)
 
         # We set the tolerance and max_passes lower here so that the code will run
         # faster.However, in practice, you will want to run the training to
         # convergence.
         from ex6_SVM.svmTrain import svmTrain
-        model = svmTrain(self.X_3, self.y_3, C, "gaussian")
-        import matplotlib.pyplot as plt
-        plt.close()
+        model = svmTrain(self.X_3, self.y_3, C, "gaussian", sigma=sigma)
+
         from ex6_SVM.visualizeBoundary import visualizeBoundary
         visualizeBoundary(self.X_3, self.y_3, model)
