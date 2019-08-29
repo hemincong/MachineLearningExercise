@@ -168,6 +168,8 @@ class test_ex6_svm(unittest.TestCase):
         # Try different SVM Parameters here
         from ex6_SVM.dataset3Params import dataset3Params
         C, sigma = dataset3Params(self.X_3, self.y_3, self.Xval_3, self.yval_3)
+        self.assertAlmostEqual(C, 0.1, delta=0.1)
+        self.assertAlmostEqual(sigma, 0.1, delta=0.1)
 
         # We set the tolerance and max_passes lower here so that the code will run
         # faster.However, in practice, you will want to run the training to
