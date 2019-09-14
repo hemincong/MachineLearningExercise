@@ -52,6 +52,9 @@ class test_ex6_svm(unittest.TestCase):
 
         print('Closest centroids for the first 3 examples:')
         print(' {idx}'.format(idx=idx))
+        # adjusted next string for python's 0-indexing
+        print('(the closest centroids should be 0, 2, 1 respectively)')
+
         self.assertEqual(idx.shape[0], self.X.shape[0])
         self.assertEqual(idx.flatten()[0], 0)
         self.assertEqual(idx.flatten()[1], 2)
