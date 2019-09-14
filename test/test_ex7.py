@@ -81,3 +81,26 @@ class test_ex6_svm(unittest.TestCase):
         self.assertAlmostEqual(centroids[1, :][1], 2.633656, delta=0.001)
         self.assertAlmostEqual(centroids[2, :][0], 7.119387, delta=0.001)
         self.assertAlmostEqual(centroids[2, :][1], 3.616684, delta=0.001)
+
+    # =================== Part 3: K-Means Clustering ======================
+    #  After you have completed the two functions computeCentroids and
+    #  findClosestCentroids, you have all the necessary pieces to run the
+    #  kMeans algorithm. In this part, you will run the K-Means algorithm on
+    #  the example dataset we have provided.
+    #
+    def test_k_means_clustering(self):
+        print('Running K-Means clustering on example dataset.')
+        K = 3
+        max_iters = 10
+
+        # For consistency, here we set centroids to specific values
+        # but in practice you want to generate them automatically, such as by
+        # settings them to be random examples(as can be seen in
+        # kMeansInitCentroids).
+        initial_centroids = np.array([[3, 3], [6, 2], [8, 5]])
+
+        from ex7_K_means_Clustering_and_Principal_Component_Analysis.runkMeans import runkMeans
+        controids, idx = runkMeans(self.X, initial_centroids, max_iters, True)
+
+        print("K-Means Done")
+
