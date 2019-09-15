@@ -48,15 +48,12 @@ def runkMeans(X, initial_centroids, max_iters, plot_progress):
 
         idx = findClosestCentroids(X, centroids)
 
-        # 图去哪了？
         if plot_progress:
             plotProgresskMeans(X, centroids, previous_centroids, idx, K, i)
             previous_centroids = centroids
+        plt.show(block=False)
 
         # Given the memberships, compute new centroids
         centroids = computeCentroids(X, idx, K)
-
-    # Hold off if we are plotting progress
-    print("")
 
     return centroids, idx
