@@ -141,4 +141,41 @@ class test_ex6_svm(unittest.TestCase):
         rand_centroid = kMeansInitCentroids(X, K)
 
         from ex7_K_means_Clustering_and_Principal_Component_Analysis.runkMeans import runkMeans
-        runkMeans(X, rand_centroid, max_iters, True)
+        centroids, idx = runkMeans(X, rand_centroid, max_iters, True)
+
+        # ================= Part 5: Image Compression ======================
+        #  In this part of the exercise, you will use the clusters of K-Means to
+        #  compress an image. To do this, we first find the closest clusters for
+        #  each example. After that, we
+
+        print('Applying K-Means to compress an image.')
+
+        # Find closest cluster members
+        from ex7_K_means_Clustering_and_Principal_Component_Analysis.findClosestCentroids import findClosestCentroids
+        # Reshape the image into an Nx3 matrix where N = number of pixels.
+        # Each row will contain the Red, Green and Blue pixel values
+        # This gives us our dataset matrix X that we will use K - Means on.
+        idx = findClosestCentroids(X, centroids)
+
+        # Essentially, now we have represented the image X as in terms of the
+        # indices in idx.
+
+        # We can now recover the image from the indices (idx) by mapping each pixel
+        # (specified by it's index in idx) to the centroid value
+        X_recovered = centroids[idx]
+
+        # Reshape the recovered image into proper dimensions
+        X_recovered = X_recovered.reshape(m, n, 3, order='F')
+
+        import matplotlib.pyplot as plt
+        # Display the original image
+        plt.close()
+        plt.subplot(1, 2, 1)
+        plt.imshow(A)
+        plt.title('Original')
+
+        # Display compressed image side by side
+        plt.subplot(1, 2, 2)
+        plt.imshow(X_recovered)
+        plt.title('Compressed, with {:d} colors.'.format(K))
+        plt.show(block=False)
