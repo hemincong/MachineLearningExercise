@@ -30,10 +30,9 @@ def findClosestCentroids(X, centroids):
     for i in range(m):
         min_distance = 100000000
         for j in range(K):
-            x, y = X[i]
-            x_c, y_c = centroids[j]
+            diff = X[i] - centroids[j]
             # no need square
-            distance = np.power(x - x_c, 2) + np.power(y - y_c, 2)
+            distance = diff.dot(diff.T)
 
             if min_distance > distance:
                 min_distance = distance
