@@ -34,5 +34,6 @@ def computeCentroids(X, idx, K):
     for i in range(K):
         filtered_X = X[np.nonzero(idx == i)[0]]
         centroids[i] = np.mean(filtered_X, axis=0)
+        print("i: {i}, centroids: {centroids}".format(i=i, centroids=centroids[i]))
 
     return centroids
