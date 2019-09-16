@@ -17,6 +17,7 @@ def kMeansInitCentroids(X, K):
 
     # Initialize the centroids to be random examples
     # Randomly reorder the indices of examples
+    #centroids = np.random.uniform(low=np.min(X), high=np.max(X), size=(K, X.shape[1]))
     randidx = np.random.permutation(X.shape[0])
     # Take the first K examples as centroids
     centroids = X[randidx[:K], :]
