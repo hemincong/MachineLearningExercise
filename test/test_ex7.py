@@ -100,7 +100,45 @@ class test_ex6_svm(unittest.TestCase):
         initial_centroids = np.array([[3, 3], [6, 2], [8, 5]])
 
         from ex7_K_means_Clustering_and_Principal_Component_Analysis.runkMeans import runkMeans
-        controids, idx = runkMeans(self.X, initial_centroids, max_iters, True)
+        runkMeans(self.X, initial_centroids, max_iters, True)
 
         print("K-Means Done")
 
+    # ============== Part 4: K-Means Clustering on Pixels ===============
+    #  In this exercise, you will use K-Means to compress an image. To do this,
+    #  you will first run K-Means on the colors of the pixels in the image and
+    #  then you will map each pixel on to it's closest centroid.
+    #
+    #  You should now complete the code in kMeansInitCentroids.m
+    #
+    def test_k_means_clustering_on_pixels(self):
+        print('Running K-Means clustering on pixels from an image.')
+
+        # Load an image of a bird
+        # If imread does not work for you, you can try instead
+        image_file = "resource/bird_small.mat"
+        image_mat = scipy.io.loadmat(image_file)
+        A = image_mat["A"]
+        A = A / 255.0  # Divide by 255 so that all values are in the range 0 - 1
+
+        # Size of the image
+        m, n, c = np.shape(A)
+
+        # Reshape the image into an Nx3 matrix where N = number of pixels.
+        # Each row will contain the Red, Green and Blue pixel values
+        # This gives us our dataset matrix X that we will use K - Means on.
+        X = np.reshape(A, ((m * n), c), order='F').copy()
+
+        # Run your K-Means algorithm on this data
+        # You should try different values of K and max_iters here
+        K = 16
+        max_iters = 10
+
+        # When using K-Means, it is important the initialize the centroids
+        # randomly.
+        # You should complete the code in kMeansInitCentroids.m before proceeding
+        from ex7_K_means_Clustering_and_Principal_Component_Analysis.kMeansInitCentroids import kMeansInitCentroids
+        rand_centroid = kMeansInitCentroids(X, K)
+
+        from ex7_K_means_Clustering_and_Principal_Component_Analysis.runkMeans import runkMeans
+        runkMeans(X, rand_centroid, max_iters, True)
