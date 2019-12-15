@@ -125,7 +125,6 @@ class test_ex7_pca(unittest.TestCase):
         self.assertAlmostEqual(X_rec[0, 1], -1.047419, delta=0.1)
 
         plt.scatter(X_rec[:, 0], X_rec[:, 1], s=75, facecolors='none', edgecolors='r')
-        plt.axis([-4, 3, -4, 3])
 
         for i in range(X_norm.shape[0]):
             plt.plot([X_norm[i, :][0], X_rec[i, :][0]], [X_norm[i, :][1], X_rec[i, :][1]], linestyle='--', color='k',
