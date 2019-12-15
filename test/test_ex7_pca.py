@@ -183,3 +183,25 @@ class test_ex7_pca(unittest.TestCase):
 
         print("The projected data Z has a size of: {z}".format(z=np.shape(Z)))
 
+        #  ==== Part 7: Visualization of Faces after PCA Dimension Reduction ====
+        #  Project images to the eigen space using the top K eigen vectors and
+        #  visualize only using those K dimensions
+        #  Compare to the original input, which is also displayed
+
+        print("Visualizing the projected (reduced dimension) faces.")
+        K = 100
+        from ex7_K_means_Clustering_and_Principal_Component_Analysis.recoverData import recoverData
+        X_rec = recoverData(Z, U, K)
+
+        # Display normalized data
+        plt.close()
+        plt.subplot(1, 2, 1)
+        displayData(X_norm[:100, :])
+        plt.title('Original faces')
+        plt.gca().set_aspect('equal', adjustable='box')
+
+        # Display reconstructed data from only k eigenfaces
+        plt.subplot(1, 2, 2)
+        displayData(X_rec[:100, :])
+        plt.title('Recovered faces')
+        plt.gca().set_aspect('equal', adjustable='box')
