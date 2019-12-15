@@ -4,6 +4,7 @@
 import unittest
 
 import matplotlib.pyplot as plt
+import numpy as np
 import scipy.io
 
 
@@ -131,3 +132,18 @@ class test_ex7_pca(unittest.TestCase):
                      linewidth=1)
 
         plt.show(block=False)
+
+    # =============== Part 4: Loading and Visualizing Face Data =============
+    #  We start the exercise by first loading and visualizing the dataset.
+    #  The following code will load the dataset into your environment
+    #
+    def test_Loading_and_Visualizing_Face_Data(self):
+        print('Loading face dataset.')
+
+        #  Load Face dataset
+        mat = scipy.io.loadmat('resource/ex7faces.mat')
+        X = np.array(mat["X"])
+
+        #  Display the first 100 faces in the dataset
+        from utils.displayData import displayData
+        displayData(X[:100, :])
