@@ -147,3 +147,28 @@ class test_ex7_pca(unittest.TestCase):
         #  Display the first 100 faces in the dataset
         from utils.displayData import displayData
         displayData(X[:100, :])
+
+    #  =========== Part 5: PCA on Face Data: Eigenfaces  ===================
+    #  Run PCA and visualize the eigenvectors which are in this case eigenfaces
+    #  We display the first 36 eigenfaces.
+    #
+    def test_PCA_on_Face_Data_Eignfaces(self):
+        print("Running PCA on face dataset.")
+        print("this mght take a minute or two ...")
+
+        #  Load Face dataset
+        mat = scipy.io.loadmat('resource/ex7faces.mat')
+        X = np.array(mat["X"])
+
+        #  Before running PCA, it is important to first normalize X by subtracting
+        #  the mean value from each feature
+        from utils.featureNormalize import featureNormalize
+        X_norm, _, _ = featureNormalize(X)
+
+        #  Run PCA
+        from ex7_K_means_Clustering_and_Principal_Component_Analysis.pca import pca
+        U, S = pca(X_norm)
+
+        #  Visualize the top 36 eigenvectors found
+        from utils.displayData import displayData
+        displayData(U[:, :36].T)
