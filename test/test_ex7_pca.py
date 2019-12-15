@@ -108,7 +108,6 @@ class test_ex7_pca(unittest.TestCase):
         plt.scatter(X_norm[:, 0], X_norm[:, 1], s=75, facecolors='none', edgecolors='b')
         plt.axis([-4, 3, -4, 3])
         plt.gca().set_aspect('equal', adjustable='box')
-        plt.show(block=False)
 
         from ex7_K_means_Clustering_and_Principal_Component_Analysis.projectData import projectData
         #  Project the data onto K = 1 dimension
