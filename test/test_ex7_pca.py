@@ -172,3 +172,14 @@ class test_ex7_pca(unittest.TestCase):
         #  Visualize the top 36 eigenvectors found
         from utils.displayData import displayData
         displayData(U[:, :36].T)
+
+        #  ============= Part 6: Dimension Reduction for Faces =================
+        #  Project images to the eigen space using the top k eigenvectors
+        #  If you are applying a machine learning algorithm
+        print("Dimension reduction for face dataset.")
+        K = 100
+        from ex7_K_means_Clustering_and_Principal_Component_Analysis.projectData import projectData
+        Z = projectData(X_norm, U, K)
+
+        print("The projected data Z has a size of: {z}".format(z=np.shape(Z)))
+
