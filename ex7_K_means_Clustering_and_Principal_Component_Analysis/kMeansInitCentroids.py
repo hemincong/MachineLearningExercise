@@ -1,8 +1,9 @@
 import numpy as np
 
+
 def kMeansInitCentroids(X, K):
-    #KMEANSINITCENTROIDS This function initializes K centroids that are to be
-    #used in K-Means on the dataset X
+    # KMEANSINITCENTROIDS This function initializes K centroids that are to be
+    # used in K-Means on the dataset X
     #   centroids = KMEANSINITCENTROIDS(X, K) returns K initial centroids to be
     #   used with the K-Means on the dataset X
     #
@@ -17,7 +18,7 @@ def kMeansInitCentroids(X, K):
 
     # Initialize the centroids to be random examples
     # Randomly reorder the indices of examples
-    #centroids = np.random.uniform(low=np.min(X), high=np.max(X), size=(K, X.shape[1]))
+    # centroids = np.random.uniform(low=np.min(X), high=np.max(X), size=(K, X.shape[1]))
     randidx = np.random.permutation(X.shape[0])
     # Take the first K examples as centroids
     centroids = X[randidx[:K], :]
@@ -25,4 +26,3 @@ def kMeansInitCentroids(X, K):
     # =============================================================
 
     return centroids
-
