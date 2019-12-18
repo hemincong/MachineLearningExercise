@@ -28,6 +28,7 @@ import scipy.io
 #  or any other files other than those mentioned above.
 #
 
+
 class test_ex7_pca(unittest.TestCase):
     @classmethod
     def setUp(cls):
@@ -205,3 +206,64 @@ class test_ex7_pca(unittest.TestCase):
         displayData(X_rec[:100, :])
         plt.title('Recovered faces')
         plt.gca().set_aspect('equal', adjustable='box')
+
+    #  === Part 8(a): Optional (ungraded) Exercise: PCA for Visualization ===
+    #  One useful application of PCA is to use it to visualize high-dimensional
+    #  data. In the last K-Means exercise you ran K-Means on 3-dimensional
+    #  pixel colors of an image. We first visualize this output in 3D, and then
+    #  apply PCA to obtain a visualization in 2D.
+    def test_PCA_for_Visualization(self):
+        plt.close()
+        # Re-load the image from the previous exercise and run K-Means on it
+        # For this to work, you need to complete the K-Means assignment first
+
+        # A = double(imread('bird_small.png'));
+        # If imread does not work for you, you can try instead
+        mat = scipy.io.loadmat('resource/bird_small.mat')
+        A = mat["A"]
+
+        A = A / 255
+        image_size = np.shape(A)
+        X = A.reshape(image_size[0] * image_size[1], 3)
+        K = 16
+        max_iters = 10
+        from ex7_K_means_Clustering_and_Principal_Component_Analysis.kMeansInitCentroids import kMeansInitCentroids
+        initial_centroids = kMeansInitCentroids(X, K)
+        from ex7_K_means_Clustering_and_Principal_Component_Analysis.runkMeans import runkMeans
+        centorids, idx = runkMeans(X, initial_centroids, max_iters, True)
+
+        # Sample 1000 random indexes(since working with all the data is
+        # too expensive.If you have a fast computer, you may increase this.
+        sel = np.floor(np.random.rand(1000, 1) * X.shape[0]).astype(int).flatten()
+
+        # Setup Color Palette
+        from utils.hsv import hsv
+        palette = hsv(K)
+        colors = np.array([palette[int(i)] for i in idx[sel]])
+
+        # fig = plt.figure()
+        # ax = fig.add_subplot(111, projection='3d')
+        # ax.scatter(X[sel, 0], X[sel, 1], X[sel, 2], s=100, c=colors)
+        # plt.title('Pixel dataset plotted in 3D. Color shows centroid memberships')
+        # plt.show(block=False)
+
+        # === Part 8(b): Optional (ungraded) Exercise: PCA for Visualization ===
+        # Use PCA to project this cloud to 2D for visualization
+
+        from ex5_regularized_linear_regressionand_bias_vs_variance.featureNormalize import featureNormalize
+        # Subtract the mean to use PCA
+        X_norm, _, _ = featureNormalize(X)
+
+        # PCA and project the data to 2D
+        from ex7_K_means_Clustering_and_Principal_Component_Analysis.pca import pca
+        U, S = pca(X_norm)
+
+        from ex7_K_means_Clustering_and_Principal_Component_Analysis.projectData import projectData
+        Z = projectData(X_norm, U, 2)
+
+        # Plot in 2D
+        plt.figure(2)
+        from ex7_K_means_Clustering_and_Principal_Component_Analysis.plotDataPoints import plotDataPoints
+        plotDataPoints(Z[sel, :], idx[sel], K)
+        plt.title('Pixel dataset plotted in 2D, using PCA for dimensionality reduction')
+        plt.show(block=False)
