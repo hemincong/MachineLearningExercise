@@ -57,3 +57,7 @@ class test_ex3_nn(unittest.TestCase):
             print('Displaying Example Image')
             pred = predict(Theta1, Theta2, X[i])
             print('Neural Network Prediction: {:d} (digit {:d})'.format(pred[0], y[i]))
+
+
+if __name__ == '__main__':
+    unittest.main()

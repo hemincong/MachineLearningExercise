@@ -12,3 +12,7 @@ class test_ex2_sigmoid(unittest.TestCase):
         self.assertAlmostEqual(ret, 0.268, delta=0.01)
         ret = sigmoid(0)
         self.assertAlmostEqual(ret, 0.5, delta=0.01)
+
+
+if __name__ == '__main__':
+    unittest.main()

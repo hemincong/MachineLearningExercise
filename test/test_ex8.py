@@ -70,3 +70,7 @@ class test_ex8(unittest.TestCase):
         self.assertAlmostEqual(mu[1], 14.99771051, delta=0.001)
         self.assertAlmostEqual(sigma2[0], 1.83263141, delta=0.001)
         self.assertAlmostEqual(sigma2[1], 1.70974533, delta=0.001)
+
+
+if __name__ == '__main__':
+    unittest.main()

@@ -164,3 +164,7 @@ class test_ex6_spam(unittest.TestCase):
                 print('Processed {filename} : Spam Classification: {p}'.format(filename=f, p=p))
                 print('(1 indicates spam, 0 indicates not spam)')
                 self.assertEqual(p[0], ret)
+
+
+if __name__ == '__main__':
+    unittest.main()

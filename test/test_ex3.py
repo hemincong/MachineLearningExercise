@@ -78,3 +78,7 @@ class test_ex3(unittest.TestCase):
         ret = predictOneVsAll(all_theta, X) + 1
         radio = np.mean((ret == y))
         self.assertGreater(radio, 0.90)
+
+
+if __name__ == '__main__':
+    unittest.main()

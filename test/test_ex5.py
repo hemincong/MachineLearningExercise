@@ -287,3 +287,7 @@ class test_ex5_regularized_linear_regressionand_bias_vs_variance(unittest.TestCa
         plt.ylabel('Error')
         plt.axis([0, 13, 0, 150])
         plt.show(block=False)
+
+
+if __name__ == '__main__':
+    unittest.main()

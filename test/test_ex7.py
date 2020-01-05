@@ -179,3 +179,7 @@ class test_ex6_svm(unittest.TestCase):
         plt.imshow(X_recovered)
         plt.title('Compressed, with {:d} colors.'.format(K))
         plt.show(block=False)
+
+
+if __name__ == '__main__':
+    unittest.main()

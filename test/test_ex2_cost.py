@@ -98,3 +98,7 @@ class test_ex2_cost(unittest.TestCase):
         from ex2_logistic_regression.plotDecisionBoundary import plotDecisionBoundary
         ret = line_regression_by_fmin(x, y)
         plotDecisionBoundary(ret.x, x, y)
+
+
+if __name__ == '__main__':
+    unittest.main()

@@ -307,3 +307,7 @@ class test_ex4_nn_back_propagation(unittest.TestCase):
         print('Training Set Accuracy: {accuracy}'.format(accuracy=accuracy))
 
         self.assertGreater(accuracy, 0.80)
+
+
+if __name__ == '__main__':
+    unittest.main()

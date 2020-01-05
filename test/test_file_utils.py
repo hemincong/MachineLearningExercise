@@ -25,3 +25,7 @@ class test_ex1_linear_regression(unittest.TestCase):
         y2 = data[:, 2]
         self.assertTrue(np.array_equal(x1, x2))
         self.assertTrue(np.array_equal(y1, y2))
+
+
+if __name__ == '__main__':
+    unittest.main()

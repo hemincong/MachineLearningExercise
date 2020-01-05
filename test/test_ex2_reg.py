@@ -95,3 +95,7 @@ class test_ex2_reg(unittest.TestCase):
         plt.xlabel('Microchip Test 1')
         plt.ylabel('Microchip Test 2')
         plt.show()
+
+
+if __name__ == '__main__':
+    unittest.main()

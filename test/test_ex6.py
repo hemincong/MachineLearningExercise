@@ -179,3 +179,7 @@ class test_ex6_svm(unittest.TestCase):
 
         from ex6_SVM.visualizeBoundary import visualizeBoundary
         visualizeBoundary(self.X_3, self.y_3, model)
+
+
+if __name__ == '__main__':
+    unittest.main()

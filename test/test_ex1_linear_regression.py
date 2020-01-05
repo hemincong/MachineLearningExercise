@@ -79,3 +79,7 @@ class test_line_regression(unittest.TestCase):
         self.assertAlmostEqual(ret[0], 89597, delta=1)
         self.assertAlmostEqual(ret[1], 139, delta=1)
         self.assertAlmostEqual(ret[2], -8738, delta=1)
+
+
+if __name__ == '__main__':
+    unittest.main()

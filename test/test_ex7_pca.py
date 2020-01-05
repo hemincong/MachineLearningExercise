@@ -267,3 +267,7 @@ class test_ex7_pca(unittest.TestCase):
         plotDataPoints(Z[sel, :], idx[sel], K)
         plt.title('Pixel dataset plotted in 2D, using PCA for dimensionality reduction')
         plt.show(block=False)
+
+
+if __name__ == '__main__':
+    unittest.main()
