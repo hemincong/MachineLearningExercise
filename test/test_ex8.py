@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 import unittest
 
 import matplotlib.pyplot as plt
@@ -48,3 +51,22 @@ class test_ex8(unittest.TestCase):
         plt.xlabel('Latency (ms)')
         plt.ylabel('Throughput (ms/s)')
         plt.show(block=True)
+
+    #  ================== Part 2: Estimate the dataset statistics ===================
+    #  For this exercise, we assume a Gaussian distribution for the dataset.
+    #
+    #  We first estimate the parameters of our assumed Gaussian distribution,
+    #  then compute the probabilities for each of the points and then visualize
+    #  both the overall distribution and where each of the points falls in
+    #  terms of that distribution.
+    #
+    def test_Estimate_the_dataset_statistics(self):
+        print('Visualizing Gaussian fit.')
+
+        from ex8_Anomaly_Detection_and_Recommender_Systems.estimateGaussian import estimateGaussian
+        mu, sigma2 = estimateGaussian(self.X)
+
+        self.assertAlmostEqual(mu[0], 14.1122578, delta=0.001)
+        self.assertAlmostEqual(mu[1], 14.99771051, delta=0.001)
+        self.assertAlmostEqual(sigma2[0], 1.83263141, delta=0.001)
+        self.assertAlmostEqual(sigma2[1], 1.70974533, delta=0.001)
