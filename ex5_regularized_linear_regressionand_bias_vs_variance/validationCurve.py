@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import numpy as np
-
 
 def validationCurve(X, y, Xval, yval):
     # VALIDATIONCURVE Generate the train and validation errors needed to

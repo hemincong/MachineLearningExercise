@@ -2,7 +2,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 import ex6_SVM.gaussianKernelGramMatrix as gkgm
-import ex6_SVM.plotData as pd
 
 
 def visualizeBoundary(X, y, model, varargin=0):
