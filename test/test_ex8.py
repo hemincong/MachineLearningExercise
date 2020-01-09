@@ -71,6 +71,15 @@ class test_ex8(unittest.TestCase):
         self.assertAlmostEqual(sigma2[0], 1.83263141, delta=0.001)
         self.assertAlmostEqual(sigma2[1], 1.70974533, delta=0.001)
 
+        from ex8_Anomaly_Detection_and_Recommender_Systems.multivariateGaussian import multivariateGaussian
+        p = multivariateGaussian(self.X, mu, sigma2)
+
+        from ex8_Anomaly_Detection_and_Recommender_Systems.visualizeFit import visualizeFit
+        visualizeFit(self.X, mu, sigma2)
+        plt.xlabel('Latency (ms)')
+        plt.ylabel('Throughput (mb/s)')
+        plt.show(block=False)
+
 
 if __name__ == '__main__':
     unittest.main()
