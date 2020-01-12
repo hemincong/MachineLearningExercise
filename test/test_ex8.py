@@ -33,6 +33,8 @@ class test_ex8(unittest.TestCase):
         data_file = "resource/ex8data1.mat"
         mat = scipy.io.loadmat(data_file)
         cls.X = mat["X"]
+        cls.yVal = mat["yval"]
+        cls.xVal = mat["Xval"]
 
     #  ================== Part 1: Load Example Dataset  ===================
     #  We start this exercise by using a small dataset that is easy to
@@ -71,15 +73,35 @@ class test_ex8(unittest.TestCase):
         self.assertAlmostEqual(sigma2[0], 1.83263141, delta=0.001)
         self.assertAlmostEqual(sigma2[1], 1.70974533, delta=0.001)
 
-        from ex8_Anomaly_Detection_and_Recommender_Systems.multivariateGaussian import multivariateGaussian
-        p = multivariateGaussian(self.X, mu, sigma2)
-
         from ex8_Anomaly_Detection_and_Recommender_Systems.visualizeFit import visualizeFit
         visualizeFit(self.X, mu, sigma2)
         plt.xlabel('Latency (ms)')
         plt.ylabel('Throughput (mb/s)')
         plt.show(block=False)
 
+    #  ================== Part 3: Find Outliers ===================
+    #  Now you will find a good epsilon threshold using a cross-validation set
+    #  probabilities given the estimated Gaussian distribution
+    #
+    def test_Find_Outliers(self):
+        from ex8_Anomaly_Detection_and_Recommender_Systems.estimateGaussian import estimateGaussian
+        mu, sigma2 = estimateGaussian(self.X)
+        from ex8_Anomaly_Detection_and_Recommender_Systems.multivariateGaussian import multivariateGaussian
+        p = multivariateGaussian(self.X, mu, sigma2)
+        pval = multivariateGaussian(self.xVal, mu, sigma2)
+        from ex8_Anomaly_Detection_and_Recommender_Systems.selectThreshold import selectThreshold
+        epsilon, F1 = selectThreshold(self.yVal, pval)
+        print("Best epsilon found using cross-validation: {epsilon}".format(epsilon=epsilon))
+        print("Best F1 on Cross Validation Set:  {F1}".format(F1=F1))
+        print("   (you should see a value epsilon of about 8.99e-05)")
+        self.assertAlmostEqual(epsilon, 8.99e-05, delta=0.00001)
+        outliers = p < epsilon
+
+        #  Draw a red circle around those outliers
+        from ex8_Anomaly_Detection_and_Recommender_Systems.visualizeFit import visualizeFit
+        visualizeFit(self.X, mu, sigma2)
+        plt.plot(self.X[outliers, 0], self.X[outliers, 1], 'ro', linewidth=2, markersize=18, fillstyle='none', markeredgewidth=1)
+        plt.show(block=False)
 
 if __name__ == '__main__':
     unittest.main()
