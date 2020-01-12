@@ -106,6 +106,44 @@ class test_ex8(unittest.TestCase):
         plt.ylabel('Throughput (mb/s)')
         plt.show(block=False)
 
+    #  ================== Part 4: Multidimensional Outliers ===================
+    #  We will now use the code from the previous part and apply it to a
+    #  harder problem in which more features describe each datapoint and only
+    #  some features indicate whether a point is an outlier.
+    #
+    def test_Multidimensional_Outliers(self):
+        #  Loads the second dataset. You should now have the
+        #  variables X, Xval, yval in your environment
+        data_file = "resource/ex8data2.mat"
+        mat2 = scipy.io.loadmat(data_file)
+        X_2 = mat2["X"]
+        yVal_2 = mat2["yval"]
+        xVal_2 = mat2["Xval"]
+
+        #  Apply the same steps to the larger dataset
+        from ex8_Anomaly_Detection_and_Recommender_Systems.estimateGaussian import estimateGaussian
+        mu, sigma2 = estimateGaussian(X_2)
+
+        #  Training set
+        from ex8_Anomaly_Detection_and_Recommender_Systems.multivariateGaussian import multivariateGaussian
+        p = multivariateGaussian(X_2, mu, sigma2);
+
+        #  Cross-validation set
+        pval = multivariateGaussian(xVal_2, mu, sigma2)
+
+        from ex8_Anomaly_Detection_and_Recommender_Systems.selectThreshold import selectThreshold
+        #  Find the best threshold
+        epsilon, F1 = selectThreshold(yVal_2, pval)
+
+        outliers = p < epsilon
+        outliers_count = sum(outliers)
+
+        print("Best epsilon found using cross-validation: {epsilon}".format(epsilon=epsilon))
+        print("Best F1 on Cross Validation Set:  {F1}".format(F1=F1))
+        print("# Outliers found: {outliers}".format(outliers=outliers_count))
+        print("    (you should see a value epsilon of about 1.38e-18)")
+        self.assertAlmostEqual(epsilon, 1.38e-18)
+
 
 if __name__ == '__main__':
     unittest.main()
