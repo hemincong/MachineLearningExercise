@@ -100,8 +100,12 @@ class test_ex8(unittest.TestCase):
         #  Draw a red circle around those outliers
         from ex8_Anomaly_Detection_and_Recommender_Systems.visualizeFit import visualizeFit
         visualizeFit(self.X, mu, sigma2)
-        plt.plot(self.X[outliers, 0], self.X[outliers, 1], 'ro', linewidth=2, markersize=18, fillstyle='none', markeredgewidth=1)
+        plt.plot(self.X[outliers, 0], self.X[outliers, 1], 'ro', linewidth=2, markersize=18, fillstyle='none',
+                 markeredgewidth=1)
+        plt.xlabel('Latency (ms)')
+        plt.ylabel('Throughput (mb/s)')
         plt.show(block=False)
+
 
 if __name__ == '__main__':
     unittest.main()
