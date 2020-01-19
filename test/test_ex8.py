@@ -5,6 +5,7 @@ import unittest
 
 import matplotlib.pyplot as plt
 import scipy.io
+import numpy as np
 
 
 #  Machine Learning Online Class
@@ -126,7 +127,7 @@ class test_ex8(unittest.TestCase):
 
         #  Training set
         from ex8_Anomaly_Detection_and_Recommender_Systems.multivariateGaussian import multivariateGaussian
-        p = multivariateGaussian(X_2, mu, sigma2);
+        p = multivariateGaussian(X_2, mu, sigma2)
 
         #  Cross-validation set
         pval = multivariateGaussian(xVal_2, mu, sigma2)
@@ -136,7 +137,7 @@ class test_ex8(unittest.TestCase):
         epsilon, F1 = selectThreshold(yVal_2, pval)
 
         outliers = p < epsilon
-        outliers_count = sum(outliers)
+        outliers_count = np.sum(outliers)
 
         print("Best epsilon found using cross-validation: {epsilon}".format(epsilon=epsilon))
         print("Best F1 on Cross Validation Set:  {F1}".format(F1=F1))
