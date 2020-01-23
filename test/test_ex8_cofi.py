@@ -77,7 +77,7 @@ class test_ex8_cofi(unittest.TestCase):
 
         # Evaluate cost function
         params = np.concatenate((X.reshape(X.size, order='F'), Theta.reshape(Theta.size, order='F')))
-        J = cofiCostFunc(params, Y, R, num_users, num_movies, num_features, 0)
+        J, _ = cofiCostFunc(params, Y, R, num_users, num_movies, num_features, 0)
         print("Cost at loaded parameters: {cost}".format(cost=J))
         print("(this value should be about 22.22)")
         self.assertAlmostEqual(J, 22.22, delta=0.01)
