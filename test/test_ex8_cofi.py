@@ -82,6 +82,16 @@ class test_ex8_cofi(unittest.TestCase):
         print("(this value should be about 22.22)")
         self.assertAlmostEqual(J, 22.22, delta=0.01)
 
+    #  ============== Part 3: Collaborative Filtering Gradient ==============
+    #  Once your cost function matches up with ours, you should now implement
+    #  the collaborative filtering gradient function. Specifically, you should
+    #  complete the code in cofiCostFunc.m to return the grad argument.
+    #
+    def test_Collaborative_Filtering_Gradient(self):
+        print('Checking Gradients (without regularization) ... ')
+        from ex8_Anomaly_Detection_and_Recommender_Systems.checkCostFunction import checkCostFunction
+        checkCostFunction()
+
 
 if __name__ == '__main__':
     unittest.main()
