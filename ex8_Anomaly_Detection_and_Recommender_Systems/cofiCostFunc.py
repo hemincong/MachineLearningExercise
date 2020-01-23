@@ -46,4 +46,9 @@ def cofiCostFunc(params, Y, R, num_users, num_movies, num_features, _lambda):
 
     ### COST FUNCTION, NO REGULARIZATION
     J = (1 / 2) * np.sum(np.power(np.dot(X, Theta.T) - Y, 2) * R)
-    return J
+
+    X_grad = np.dot((np.dot(X, Theta.T) - Y) * R, Theta) + _lambda * X
+    Theta_grad = np.dot(((np.dot(X, Theta.T) - Y) * R).T, X) + _lambda * Theta
+
+    grad = np.concatenate((X_grad.reshape(X_grad.size, order='F'), Theta_grad.reshape(Theta_grad.size, order='F')))
+    return J, grad
