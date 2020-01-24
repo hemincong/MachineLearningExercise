@@ -82,15 +82,35 @@ class test_ex8_cofi(unittest.TestCase):
         print("(this value should be about 22.22)")
         self.assertAlmostEqual(J, 22.22, delta=0.01)
 
-    #  ============== Part 3: Collaborative Filtering Gradient ==============
-    #  Once your cost function matches up with ours, you should now implement
-    #  the collaborative filtering gradient function. Specifically, you should
-    #  complete the code in cofiCostFunc.m to return the grad argument.
-    #
-    def test_Collaborative_Filtering_Gradient(self):
+        #  ============== Part 3: Collaborative Filtering Gradient ==============
+        #  Once your cost function matches up with ours, you should now implement
+        #  the collaborative filtering gradient function. Specifically, you should
+        #  complete the code in cofiCostFunc.m to return the grad argument.
+        #
         print('Checking Gradients (without regularization) ... ')
         from ex8_Anomaly_Detection_and_Recommender_Systems.checkCostFunction import checkCostFunction
         checkCostFunction()
+
+        #  ========= Part 4: Collaborative Filtering Cost Regularization ========
+        #  Now, you should implement regularization for the cost function for
+        #  collaborative filtering. You can implement it by adding the cost of
+        #  regularization to the original cost computation.
+        #
+
+        #  Evaluate cost function
+        J, _ = cofiCostFunc(params, Y, R, num_users, num_movies, num_features, 1.5)
+        print("'Cost at loaded parameters (lambda = 1.5): {cost}".format(cost=J))
+        print("(this value should be about 31.34)")
+        self.assertAlmostEqual(J, 31.34, delta=0.01)
+
+        #  ======= Part 5: Collaborative Filtering Gradient Regularization ======
+        #  Once your cost matches up with ours, you should proceed to implement
+        #  regularization for the gradient.
+        #
+        print('Checking Gradients (with regularization) ... ')
+
+        #  Check gradients by running checkNNGradients
+        checkCostFunction(1.5)
 
 
 if __name__ == '__main__':
