@@ -4,8 +4,8 @@
 import unittest
 
 import matplotlib.pyplot as plt
-import scipy.io
 import numpy as np
+import scipy.io
 
 
 #  Machine Learning Online Class
