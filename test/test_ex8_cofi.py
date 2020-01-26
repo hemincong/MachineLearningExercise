@@ -73,8 +73,8 @@ class test_ex8_cofi(unittest.TestCase):
         Theta = Theta[:num_users, :num_features]
         Y = self.movies_Y[:num_movies, :num_users]
         R = self.movies_R[:num_movies, :num_users]
-        from ex8_Anomaly_Detection_and_Recommender_Systems.cofiCostFunc import cofiCostFunc
 
+        from ex8_Anomaly_Detection_and_Recommender_Systems.cofiCostFunc import cofiCostFunc
         # Evaluate cost function
         params = np.concatenate((X.reshape(X.size, order='F'), Theta.reshape(Theta.size, order='F')))
         J, _ = cofiCostFunc(params, Y, R, num_users, num_movies, num_features, 0)
@@ -127,30 +127,118 @@ class test_ex8_cofi(unittest.TestCase):
 
         # Check the file movie_idx.txt for id of each movie in our dataset
         # For example, Toy Story (1995) has ID 1, so to rate it "4", you can set
-        my_ratings[1] = 4
+        my_ratings[0] = 4
 
         # Or suppose did not enjoy Silence of the Lambs (1991), you can set
-        my_ratings[98] = 2
+        my_ratings[97] = 2
 
         # We have selected a few movies we liked / did not like and the ratings we
         # gave are as follows:
-        my_ratings[7] = 3
+        my_ratings[6] = 3
 
         # We have selected a few movies we liked / did not like and the ratings we
         # gave are as follows:
-        my_ratings[7] = 3
-        my_ratings[12] = 5
-        my_ratings[54] = 4
-        my_ratings[64] = 5
-        my_ratings[66] = 3
-        my_ratings[69] = 5
-        my_ratings[183] = 4
-        my_ratings[226] = 5
-        my_ratings[355] = 5
+        my_ratings[6] = 3
+        my_ratings[11] = 5
+        my_ratings[53] = 4
+        my_ratings[63] = 5
+        my_ratings[65] = 3
+        my_ratings[68] = 5
+        my_ratings[182] = 4
+        my_ratings[225] = 5
+        my_ratings[354] = 5
         print('New user ratings:')
         for i in range(my_ratings.size):
             if my_ratings[i] > 0:
                 print("Rated {rate} for {movie}".format(rate=my_ratings[i], movie=movieList[i]))
+
+        #  ================== Part 7: Learning Movie Ratings ====================
+        #  Now, you will train the collaborative filtering model on a movie rating
+        #  dataset of 1682 movies and 943 users
+        #
+
+        print('Training collaborative filtering...')
+
+        data_file = "resource/ex8_movies.mat"
+        #  Reduce the data set size so that this runs faster
+        #  Load data
+        mat = scipy.io.loadmat(data_file)
+
+        Y = mat["Y"]
+        R = mat["R"]
+        #  Y is a 1682x943 matrix, containing ratings (1-5) of 1682 movies by
+        #  943 users
+        #
+        #  R is a 1682x943 matrix, where R(i,j) = 1 if and only if user j gave a
+        #  rating to movie i
+
+        #  Add our own ratings to the data matrix
+        Y = np.column_stack((my_ratings, Y))
+        R = np.column_stack(((my_ratings != 0).astype(int), R))
+
+        from ex8_Anomaly_Detection_and_Recommender_Systems.normalizeRatings import normalizeRatings
+        Ynorm, Ymean = normalizeRatings(Y, R)
+
+        # Userful Values
+        num_users = Y.shape[1]
+        num_movies = Y.shape[0]
+        num_features = 10
+
+        # Set Initial Parameters (Theta, X)
+        X = np.random.randn(num_movies, num_features)
+        Theta = np.random.randn(num_users, num_features)
+
+        params = np.concatenate((X.reshape(X.size, order='F'), Theta.reshape(Theta.size, order='F')))
+
+        # Set Regularization
+        _lambda = 10
+        # Set options
+        maxiter = 100
+        options = {'disp': True, 'maxiter': maxiter}
+
+        from ex8_Anomaly_Detection_and_Recommender_Systems.cofiCostFunc import cofiCostFunc
+
+        def cf(_p):
+            return cofiCostFunc(_p, Y, R, num_users, num_movies, num_features, _lambda)[0]
+
+        def gf(_p):
+            return cofiCostFunc(_p, Y, R, num_users, num_movies, num_features, _lambda)[1]
+
+        from scipy.optimize import fmin_l_bfgs_b
+        result2 = fmin_l_bfgs_b(cf, fprime=gf, x0=params,
+                                maxiter=100, disp=True)
+        print(result2)
+        from scipy.optimize import minimize
+        result = minimize(lambda _p: cofiCostFunc(_p, Y, R, num_users, num_movies, num_features, _lambda), x0=params,
+                          options=options, method='L-BFGS-B', jac=True)
+        print(result)
+        # r = result["x"]
+        r = result2[0]
+
+        X = np.reshape(r[:num_movies * num_features], (num_movies, num_features), order='F')
+        Theta = np.reshape(r[num_movies * num_features:], (num_users, num_features), order='F')
+        print('Recommender system learning completed.')
+
+        #  ================== Part 8: Recommendation for you ====================
+        #  After training the model, you can now make recommendations by computing
+        #  the predictions matrix.
+        #
+
+        p = np.dot(X, Theta.T)
+        my_predictions = p[:, 0:1] + Ymean
+        # reverse sorting by index
+        idx = my_predictions.argsort(axis=0)[::-1]
+        my_predictions = my_predictions[idx]
+
+        print('Top recommendations for you:')
+        for i in range(10):
+            j = idx[i, 0]
+            print('Predicting rating {p} for movie {name}'.format(p=my_predictions[j], name=movieList[j]))
+
+        print('Original ratings provided:')
+        for i in range(len(my_ratings)):
+            if my_ratings[i] > 0:
+                print('Rated {:d} for {:s}'.format(int(my_ratings[i]), movieList[i]))
 
 
 if __name__ == '__main__':

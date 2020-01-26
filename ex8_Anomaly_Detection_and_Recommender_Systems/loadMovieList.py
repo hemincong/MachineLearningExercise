@@ -9,7 +9,7 @@ def loadMovieList():
     # and returns a cell array of the words in movieList.
 
     movieList = {}
-    index = 1
+    index = 0
     with open('resource/movie_ids.txt', "r", encoding="latin-1") as fp:
         line = fp.readline()
         while line:
